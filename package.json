@@ -1,0 +1,10 @@
+{
+  "name": "starter-structure-cli",
+  "version": "0.1.0",
+  "description": "Scaffold a folder structure with demo files",
+  "type": "module",
+  "bin": {
+    "starter-structure-cli": "./bin/starter-structure-cli.js"
+  },
+  "license": "MIT"
+}
