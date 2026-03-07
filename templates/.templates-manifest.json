@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-03-07T16:23:43.600Z",
+  "builtAt": "2026-03-07T16:40:34.781Z",
   "outputs": [
     "templates\\backend-only\\express-mongoose-jwt",
     "templates\\backend-only\\express-prisma-mysql-jwt-ts",

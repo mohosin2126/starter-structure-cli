@@ -2,10 +2,16 @@
   "name": "react-vite-tailwind-landing",
   "output": "templates/single/react-vite-tailwind-landing",
   "base": [
-    "bases/single/placeholder/shared"
+    "bases/single/react-vite/shared"
+  ],
+  "layers": [
+    "layers/single/react-vite-tailwind/shared",
+    "layers/single/react-vite-tailwind-landing/shared",
+    "layers/single/react-vite-tailwind/javascript",
+    "layers/single/react-vite-tailwind-landing/javascript"
   ],
   "variables": {
-    "TEMPLATE_NAME": "react-vite-tailwind-landing",
-    "DESCRIPTION": "JavaScript React + Vite + Tailwind landing page"
+    "ENTRY_EXT": "jsx",
+    "LANGUAGE": "JavaScript"
   }
 }

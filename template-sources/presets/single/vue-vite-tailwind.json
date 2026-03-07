@@ -2,10 +2,14 @@
   "name": "vue-vite-tailwind",
   "output": "templates/single/vue-vite-tailwind",
   "base": [
-    "bases/single/placeholder/shared"
+    "bases/single/vue-vite/shared"
+  ],
+  "layers": [
+    "layers/single/vue-vite-tailwind/shared",
+    "layers/single/vue-vite-tailwind/javascript"
   ],
   "variables": {
-    "TEMPLATE_NAME": "vue-vite-tailwind",
-    "DESCRIPTION": "JavaScript Vue + Vite + Tailwind"
+    "ENTRY_EXT": "js",
+    "LANGUAGE": "JavaScript"
   }
 }

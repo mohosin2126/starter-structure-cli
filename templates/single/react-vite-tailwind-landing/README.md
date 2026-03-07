@@ -1,5 +1,18 @@
-# react-vite-tailwind-landing
+# __APP_NAME__
 
-Placeholder for the JavaScript React + Vite + Tailwind landing page starter.
+React + Vite + Tailwind landing starter in JavaScript.
 
-Replace this file with the real starter template files before publishing this template as production-ready.
+## Included
+
+- React powered by Vite
+- Tailwind CSS v4 with the Vite plugin
+- Landing-page focused hero, proof, and offer sections
+- Ready-to-edit copy blocks for fast marketing site setup
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+
