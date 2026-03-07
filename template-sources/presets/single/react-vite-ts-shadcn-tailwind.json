@@ -1,0 +1,15 @@
+{
+  "name": "react-vite-ts-shadcn-tailwind",
+  "output": "templates/single/react-vite-ts-shadcn-tailwind",
+  "base": [
+    "bases/single/react-vite/shared"
+  ],
+  "layers": [
+    "layers/single/react-vite-shadcn-tailwind/shared",
+    "layers/single/react-vite-shadcn-tailwind/typescript"
+  ],
+  "variables": {
+    "ENTRY_EXT": "tsx",
+    "LANGUAGE": "TypeScript"
+  }
+}

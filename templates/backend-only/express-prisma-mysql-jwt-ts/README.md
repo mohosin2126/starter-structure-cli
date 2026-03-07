@@ -38,9 +38,11 @@ npx prisma migrate dev --name init
 npm run dev
 ```
 
+
 ## API endpoints
 
 - `GET /api/health`
 - `POST /api/auth/register`
 - `POST /api/auth/login`
 - `GET /api/auth/me`
+

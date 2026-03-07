@@ -1,0 +1,10 @@
+{
+  "name": "express-prisma-mysql-jwt-ts",
+  "output": "templates/backend-only/express-prisma-mysql-jwt-ts",
+  "base": [
+    "bases/backend-only/express-prisma-mysql-jwt/shared"
+  ],
+  "layers": [
+    "layers/backend-only/express-prisma-mysql-jwt/typescript"
+  ]
+}

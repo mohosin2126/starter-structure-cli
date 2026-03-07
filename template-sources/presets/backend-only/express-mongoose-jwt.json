@@ -1,0 +1,7 @@
+{
+  "name": "express-mongoose-jwt",
+  "output": "templates/backend-only/express-mongoose-jwt",
+  "base": [
+    "bases/backend-only/express-mongoose-jwt/shared"
+  ]
+}

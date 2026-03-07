@@ -29,6 +29,7 @@
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0"
+
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
@@ -40,5 +41,6 @@
     "prisma": "^6.5.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
+
   }
 }

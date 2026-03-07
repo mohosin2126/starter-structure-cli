@@ -1,0 +1,11 @@
+{
+  "name": "react-vite-tailwind-landing",
+  "output": "templates/single/react-vite-tailwind-landing",
+  "base": [
+    "bases/single/placeholder/shared"
+  ],
+  "variables": {
+    "TEMPLATE_NAME": "react-vite-tailwind-landing",
+    "DESCRIPTION": "JavaScript React + Vite + Tailwind landing page"
+  }
+}

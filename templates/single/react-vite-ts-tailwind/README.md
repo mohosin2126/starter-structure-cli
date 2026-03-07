@@ -1,5 +1,18 @@
-# react-vite-ts-tailwind
+# __APP_NAME__
 
-Placeholder for the TypeScript React + Vite + Tailwind starter.
+React + Vite + Tailwind starter in TypeScript.
 
-Replace this file with the real starter template files before publishing this template as production-ready.
+## Included
+
+- React powered by Vite
+- Tailwind CSS v4 with the Vite plugin
+- A polished single-page starter layout
+- Ready-to-edit sections and shared styles
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+

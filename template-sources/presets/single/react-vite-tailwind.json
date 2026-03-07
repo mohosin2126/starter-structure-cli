@@ -1,0 +1,15 @@
+{
+  "name": "react-vite-tailwind",
+  "output": "templates/single/react-vite-tailwind",
+  "base": [
+    "bases/single/react-vite/shared"
+  ],
+  "layers": [
+    "layers/single/react-vite-tailwind/shared",
+    "layers/single/react-vite-tailwind/javascript"
+  ],
+  "variables": {
+    "ENTRY_EXT": "jsx",
+    "LANGUAGE": "JavaScript"
+  }
+}

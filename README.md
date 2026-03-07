@@ -10,23 +10,23 @@ Right now the package ships with these backend templates:
 
 The CLI discovers templates from the local `templates/` directory, so you can keep adding new starters by folder name instead of hardcoding each option.
 
-For templates with lots of overlap, reusable source parts can live under `template-sources/` and generate final publishable output into `templates/`.
+In this repo, `templates/` is generated output. The source of truth lives in `template-sources/`, and `build:templates` composes the final publishable templates from shared bases, layers, and presets.
 
-## Current template
+## Current templates
 
 ```text
 templates/
   backend-only/
+    express-prisma-mysql-jwt/
+    express-prisma-mysql-jwt-ts/
     express-mongoose-jwt/
 ```
 
-This template generates an Express API starter with:
+Included starter families:
 
-- MongoDB with Mongoose
-- JWT authentication
-- User register/login flow
-- Auth middleware
-- Basic controller, route, model, middleware, and utils structure
+- `express-mongoose-jwt`: Express + Mongoose + JWT API starter
+- `express-prisma-mysql-jwt`: Express + Prisma + MySQL + JWT in JavaScript
+- `express-prisma-mysql-jwt-ts`: Express + Prisma + MySQL + JWT in TypeScript
 
 ## Usage
 
@@ -103,22 +103,24 @@ For a step-by-step beginner note based on how this package was actually publishe
 
 ## Add more templates
 
-Add new templates under `templates/<category>/<template-name>`.
+Add or update template source files under `template-sources/`, then generate the publishable output into `templates/`.
 
 Example:
 
 ```text
-templates/
-  fullstack/
-    react-vite-ts-tailwind-express-prisma-mysql/
-  single/
-    react-vite-tailwind/
-    react-vite-ts-tailwind/
-  monorepo-client-server/
-    nextjs-express-prisma/
+template-sources/
+  bases/
+  layers/
+  presets/
 ```
 
-Folder names become searchable stack tokens, so names like `react-vite-ts-tailwind-express-prisma-mysql` can be matched by queries such as:
+Then run:
+
+```bash
+npm run build:templates
+```
+
+Generated folder names under `templates/` become searchable stack tokens, so names like `react-vite-ts-tailwind-express-prisma-mysql` can be matched by queries such as:
 
 ```bash
 npx starter-structure-cli my-app react vite ts tailwind express prisma mysql
@@ -132,23 +134,53 @@ To reduce duplication, shared template code can be composed from:
 - one or more layers
 - a preset that defines the final output path
 
-Current example:
+Current examples:
 
 ```text
 template-sources/
   bases/
+    backend-only/
+      express-prisma-mysql-jwt/
+        shared/
+      express-mongoose-jwt/
+        shared/
     single/
+      react-vite/
+        shared/
+      placeholder/
+        shared/
       nextjs-tailwind/
         shared/
   layers/
+    backend-only/
+      express-prisma-mysql-jwt/
+        javascript/
+        typescript/
     single/
       nextjs-tailwind/
         javascript/
         typescript/
+      react-vite-tailwind/
+        shared/
+        javascript/
+        typescript/
+      react-vite-shadcn-tailwind/
+        shared/
+        javascript/
+        typescript/
   presets/
+    backend-only/
+      express-mongoose-jwt.json
+      express-prisma-mysql-jwt.json
+      express-prisma-mysql-jwt-ts.json
     single/
       nextjs-tailwind.json
       nextjs-ts-tailwind.json
+      react-vite-shadcn-tailwind.json
+      react-vite-tailwind.json
+      react-vite-ts-shadcn-tailwind.json
+      react-vite-ts-tailwind.json
+      vue-vite-tailwind.json
 ```
 
 Generate the publishable templates with:
@@ -158,6 +190,37 @@ npm run build:templates
 ```
 
 This keeps `templates/` as the final scaffold output while letting you maintain shared source files only once.
+
+`prepack` runs `build:templates` before validation, so npm publish always packages the latest generated templates.
+
+## Reusable components in source templates
+
+You can keep small reusable blocks under `template-sources/components/` and include them inside text files from any base or layer.
+
+Example:
+
+```text
+template-sources/
+  components/
+    readme/
+      getting-started-vite.md
+    styles/
+      base-ui.css
+```
+
+Then call them inside a source file:
+
+```text
+{{ include: components/readme/getting-started-vite.md }}
+```
+
+You can also include relative files:
+
+```text
+{{ include: ./shared-snippet.md }}
+```
+
+This works for text files such as `.md`, `.css`, `.js`, `.ts`, `.json`, `.html`, and similar template source files.
 
 ## JavaScript and TypeScript variants
 

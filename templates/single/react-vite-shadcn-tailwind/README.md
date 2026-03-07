@@ -1,5 +1,18 @@
-# react-vite-shadcn-tailwind
+# __APP_NAME__
 
-Placeholder for the JavaScript React + Vite + shadcn/ui + Tailwind starter.
+React + Vite + shadcn/ui-style Tailwind starter in JavaScript.
 
-Replace this file with the real starter template files before publishing this template as production-ready.
+## Included
+
+- React powered by Vite
+- Tailwind CSS v4 with CSS variables
+- Reusable `cn` helper and a button primitive
+- Dashboard-style starter screen to build on
+
+## Getting started
+
+```bash
+npm install
+npm run dev
+```
+

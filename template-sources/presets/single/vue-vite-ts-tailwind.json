@@ -1,0 +1,11 @@
+{
+  "name": "vue-vite-ts-tailwind",
+  "output": "templates/single/vue-vite-ts-tailwind",
+  "base": [
+    "bases/single/placeholder/shared"
+  ],
+  "variables": {
+    "TEMPLATE_NAME": "vue-vite-ts-tailwind",
+    "DESCRIPTION": "TypeScript Vue + Vite + Tailwind"
+  }
+}

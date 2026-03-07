@@ -1,0 +1,27 @@
+{
+  "name": "__APP_NAME__",
+  "version": "1.0.0",
+  "description": "Express + Prisma + MySQL + JWT starter API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "keywords": [
+    "express",
+    "prisma",
+    "mysql",
+    "jwt",
+    "api"
+  ],
+  "license": "MIT",
+  "dependencies": {
+{{ include: components/package-json/prisma-runtime-dependencies.txt }}
+  },
+  "devDependencies": {
+{{ include: components/package-json/prisma-dev-dependencies.txt }}
+  }
+}
