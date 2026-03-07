@@ -14,7 +14,7 @@
     "prepack": "node ./scripts/check-templates.js"
   },
   "bin": {
-    "starter-structure-cli": "./bin/starter-structure-cli.js"
+    "starter-structure-cli": "bin/starter-structure-cli.js"
   },
   "keywords": [
     "cli",
