@@ -1,31 +1,28 @@
 # starter-structure-cli
 
-Scaffold your own starter templates from a stack combination such as `react vite ts tailwind express prisma mysql`, `nextjs tailwind mongoose mongodb`, or `vue vite ts tailwind express mongoose`.
+Scaffold starter projects from your own stack-based template folders.
 
-The CLI discovers templates directly from your local `templates/` folder, so you only maintain the template code once. Naming the template folder with stack tokens is enough for the generator to match it.
+Right now the package ships with one backend template:
 
-## Template layout
+- `backend-only/express-mongoose-jwt`
 
-Put each starter inside:
+The CLI discovers templates from the local `templates/` directory, so you can keep adding new starters by folder name instead of hardcoding each option.
+
+## Current template
 
 ```text
 templates/
-  fullstack/
-    react-vite-ts-tailwind-express-prisma-mysql/
-    react-vite-ts-tailwind-express-sequelize-mysql/
-    nextjs-tailwind-mongoose-mongodb/
-  single/
-    react-vite-ts-tailwind/
-    vue-vite-ts-tailwind/
   backend-only/
     express-mongoose-jwt/
-  monorepo-client-server/
-    react-vite-ts-express-mongoose/
-  monorepo-turbo-pnpm/
-    nextjs-api-express-prisma/
 ```
 
-Your folder names become the searchable stack tokens.
+This template generates an Express API starter with:
+
+- MongoDB with Mongoose
+- JWT authentication
+- User register/login flow
+- Auth middleware
+- Basic controller, route, model, middleware, and utils structure
 
 ## Usage
 
@@ -35,58 +32,84 @@ Interactive:
 npx starter-structure-cli my-app
 ```
 
+Direct selection by template:
+
+```bash
+npx starter-structure-cli my-api --template backend-only/express-mongoose-jwt
+```
+
 Direct stack query:
 
 ```bash
-npx starter-structure-cli my-pos react vite ts tailwind express sequelize mysql
+npx starter-structure-cli my-api express mongoose jwt
 ```
 
-With explicit flags:
-
-```bash
-npx starter-structure-cli my-saas --category fullstack --frontend react --backend express --orm prisma --database mysql --styling tailwind
-```
-
-Exact template:
-
-```bash
-npx starter-structure-cli my-gym --template fullstack/react-vite-ts-tailwind-express-sequelize-mysql
-```
-
-List discovered templates:
+List available templates:
 
 ```bash
 npx starter-structure-cli --list
 ```
 
-## Supported filters
-
-- `--category`: `fullstack`, `frontend-only`, `single`, `backend-only`, `monorepo`, `turbo`
-- `--frontend`: `react`, `nextjs`, `vue`
-- `--backend`: `express`, `nestjs`, `fastify`
-- `--styling`: `tailwind`, `shadcn`
-- `--orm`: `prisma`, `mongoose`, `sequelize`
-- `--database`: `mongodb`, `mysql`, `postgres`
-- `--auth`: `jwt`, `nextauth`
-- `--language`: `ts`, `js`
-
 ## Placeholder replacement
 
-The CLI replaces `__APP_NAME__` in copied file contents and file/folder names.
+The generator replaces `__APP_NAME__` in copied file contents and file or folder names.
 
-## Publish to npm
-
-```bash
-npm install
-npm publish
-```
-
-`prepack` validates that every template directory contains at least one file. This prevents publishing a package that ships no starter templates.
-
-## Development
+## Local development
 
 ```bash
 npm install
 node ./scripts/check-templates.js
 node ./bin/starter-structure-cli.js --list
+```
+
+## Publish checks
+
+Before publishing, verify:
+
+```bash
+npm.cmd install
+node .\scripts\check-templates.js
+node .\bin\starter-structure-cli.js --list
+npm.cmd pack --dry-run
+```
+
+`prepack` runs template validation automatically and blocks publish if a template directory has no files.
+
+## Publish to npm
+
+You can publish locally:
+
+```bash
+npm.cmd publish
+```
+
+Or publish from GitHub Actions using the workflow in `.github/workflows/publish.yml`.
+
+For GitHub Actions publishing, add a repository secret named `NPM_TOKEN` and use a granular npm token that has:
+
+- publish or write access
+- `bypass 2FA` enabled
+
+Without `bypass 2FA`, npm will fail in CI with `EOTP`.
+
+## Add more templates
+
+Add new templates under `templates/<category>/<template-name>`.
+
+Example:
+
+```text
+templates/
+  fullstack/
+    react-vite-ts-tailwind-express-prisma-mysql/
+  single/
+    react-vite-ts-tailwind/
+  monorepo-client-server/
+    nextjs-express-prisma/
+```
+
+Folder names become searchable stack tokens, so names like `react-vite-ts-tailwind-express-prisma-mysql` can be matched by queries such as:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind express prisma mysql
 ```

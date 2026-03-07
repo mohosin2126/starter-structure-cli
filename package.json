@@ -2,6 +2,14 @@
   "name": "starter-structure-cli",
   "version": "0.2.0",
   "description": "Scaffold starter projects from your own stack-based template folders",
+  "homepage": "https://github.com/mohosin2126/starter-structure-cli#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohosin2126/starter-structure-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mohosin2126/starter-structure-cli/issues"
+  },
   "type": "module",
   "files": [
     "bin",
