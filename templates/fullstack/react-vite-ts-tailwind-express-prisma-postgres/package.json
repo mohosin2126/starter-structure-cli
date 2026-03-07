@@ -1,0 +1,9 @@
+{
+  "name": "__APP_NAME__",
+  "private": true,
+  "version": "1.0.0",
+  "description": "react-vite-ts-tailwind-express-prisma-postgres placeholder starter",
+  "scripts": {
+    "start": "node -e \"console.log('Replace placeholder template files for fullstack/react-vite-ts-tailwind-express-prisma-postgres.')\""
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "react-admin-dashboard",
+  "output": "templates/frontend-only/react-admin-dashboard",
+  "base": [
+    "bases/single/react-vite/shared"
+  ],
+  "layers": [
+    "layers/single/react-vite-tailwind/shared",
+    "layers/single/react-vite-tailwind/javascript",
+    "layers/frontend-only/react-admin-dashboard/javascript"
+  ],
+  "variables": {
+    "ENTRY_EXT": "jsx",
+    "LANGUAGE": "JavaScript"
+  }
+}

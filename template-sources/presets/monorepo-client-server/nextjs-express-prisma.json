@@ -1,0 +1,12 @@
+{
+    "name":  "nextjs-express-prisma",
+    "output":  "templates/monorepo-client-server/nextjs-express-prisma",
+    "base":  [
+                 "bases/shared/template-placeholder/shared"
+             ],
+    "variables":  {
+                      "TEMPLATE_NAME":  "nextjs-express-prisma",
+                      "TEMPLATE_ID":  "monorepo-client-server/nextjs-express-prisma",
+                      "DESCRIPTION":  "Next.js + Express + Prisma client/server monorepo"
+                  }
+}

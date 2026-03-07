@@ -1,0 +1,12 @@
+{
+    "name":  "react-vite-ts-express-prisma",
+    "output":  "templates/monorepo-client-server/react-vite-ts-express-prisma",
+    "base":  [
+                 "bases/shared/template-placeholder/shared"
+             ],
+    "variables":  {
+                      "TEMPLATE_NAME":  "react-vite-ts-express-prisma",
+                      "TEMPLATE_ID":  "monorepo-client-server/react-vite-ts-express-prisma",
+                      "DESCRIPTION":  "React + Vite + TypeScript + Express + Prisma client/server monorepo"
+                  }
+}

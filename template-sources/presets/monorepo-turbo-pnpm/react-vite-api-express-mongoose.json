@@ -1,0 +1,12 @@
+{
+    "name":  "react-vite-api-express-mongoose",
+    "output":  "templates/monorepo-turbo-pnpm/react-vite-api-express-mongoose",
+    "base":  [
+                 "bases/shared/template-placeholder/shared"
+             ],
+    "variables":  {
+                      "TEMPLATE_NAME":  "react-vite-api-express-mongoose",
+                      "TEMPLATE_ID":  "monorepo-turbo-pnpm/react-vite-api-express-mongoose",
+                      "DESCRIPTION":  "Turborepo + pnpm + React + Vite + Express + Mongoose monorepo"
+                  }
+}

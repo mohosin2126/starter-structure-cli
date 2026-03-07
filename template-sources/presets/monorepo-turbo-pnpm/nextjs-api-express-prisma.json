@@ -1,0 +1,12 @@
+{
+    "name":  "nextjs-api-express-prisma",
+    "output":  "templates/monorepo-turbo-pnpm/nextjs-api-express-prisma",
+    "base":  [
+                 "bases/shared/template-placeholder/shared"
+             ],
+    "variables":  {
+                      "TEMPLATE_NAME":  "nextjs-api-express-prisma",
+                      "TEMPLATE_ID":  "monorepo-turbo-pnpm/nextjs-api-express-prisma",
+                      "DESCRIPTION":  "Turborepo + pnpm + Next.js + Express + Prisma monorepo"
+                  }
+}

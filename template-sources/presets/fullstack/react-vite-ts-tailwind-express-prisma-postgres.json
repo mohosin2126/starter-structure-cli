@@ -1,0 +1,12 @@
+{
+    "name":  "react-vite-ts-tailwind-express-prisma-postgres",
+    "output":  "templates/fullstack/react-vite-ts-tailwind-express-prisma-postgres",
+    "base":  [
+                 "bases/shared/template-placeholder/shared"
+             ],
+    "variables":  {
+                      "TEMPLATE_NAME":  "react-vite-ts-tailwind-express-prisma-postgres",
+                      "TEMPLATE_ID":  "fullstack/react-vite-ts-tailwind-express-prisma-postgres",
+                      "DESCRIPTION":  "React + Vite + TypeScript + Tailwind + Express + Prisma + PostgreSQL fullstack app"
+                  }
+}

@@ -1,0 +1,12 @@
+{
+    "name":  "vue-vite-ts-express-mongoose",
+    "output":  "templates/monorepo-client-server/vue-vite-ts-express-mongoose",
+    "base":  [
+                 "bases/shared/template-placeholder/shared"
+             ],
+    "variables":  {
+                      "TEMPLATE_NAME":  "vue-vite-ts-express-mongoose",
+                      "TEMPLATE_ID":  "monorepo-client-server/vue-vite-ts-express-mongoose",
+                      "DESCRIPTION":  "Vue + Vite + TypeScript + Express + Mongoose client/server monorepo"
+                  }
+}

@@ -2,11 +2,14 @@
 
 Scaffold starter projects from your own stack-based template folders.
 
-Right now the package ships with these backend templates:
+The package now ships templates across these categories:
 
-- `backend-only/express-mongoose-jwt`
-- `backend-only/express-prisma-mysql-jwt`
-- `backend-only/express-prisma-mysql-jwt-ts`
+- `backend-only/*`
+- `frontend-only/*`
+- `single/*`
+- `fullstack/*`
+- `monorepo-client-server/*`
+- `monorepo-turbo-pnpm/*`
 
 The CLI scaffolds from the local `templates/` directory at runtime.
 
@@ -17,16 +20,31 @@ In this repo, `templates/` is generated output and should not be edited by hand.
 ```text
 templates/
   backend-only/
-    express-prisma-mysql-jwt/
-    express-prisma-mysql-jwt-ts/
-    express-mongoose-jwt/
+  frontend-only/
+  fullstack/
+  monorepo-client-server/
+  monorepo-turbo-pnpm/
+  single/
 ```
 
-Included starter families:
+Fully implemented starters include:
 
-- `express-mongoose-jwt`: Express + Mongoose + JWT API starter
-- `express-prisma-mysql-jwt`: Express + Prisma + MySQL + JWT in JavaScript
-- `express-prisma-mysql-jwt-ts`: Express + Prisma + MySQL + JWT in TypeScript
+- `backend-only/express-mongoose-jwt`
+- `backend-only/express-prisma-mysql-jwt`
+- `backend-only/express-prisma-mysql-jwt-ts`
+- `single/nextjs-tailwind`
+- `single/nextjs-ts-tailwind`
+- `single/react-vite-tailwind`
+- `single/react-vite-ts-tailwind`
+- `single/react-vite-shadcn-tailwind`
+- `single/react-vite-ts-shadcn-tailwind`
+- `single/react-vite-tailwind-landing`
+- `single/react-vite-ts-tailwind-landing`
+- `single/vue-vite-tailwind`
+- `single/vue-vite-ts-tailwind`
+- `frontend-only/react-admin-dashboard`
+
+Other template IDs are currently scaffold-safe placeholders and can be completed incrementally.
 
 ## Usage
 
@@ -146,6 +164,9 @@ template-sources/
         shared/
       express-mongoose-jwt/
         shared/
+    shared/
+      template-placeholder/
+        shared/
     single/
       react-vite/
         shared/
@@ -158,6 +179,9 @@ template-sources/
       express-prisma-mysql-jwt/
         javascript/
         typescript/
+    frontend-only/
+      react-admin-dashboard/
+        javascript/
     single/
       nextjs-tailwind/
         javascript/
@@ -175,14 +199,25 @@ template-sources/
       express-mongoose-jwt.json
       express-prisma-mysql-jwt.json
       express-prisma-mysql-jwt-ts.json
+    frontend-only/
+      react-admin-dashboard.json
+    fullstack/
+      *.json
+    monorepo-client-server/
+      *.json
+    monorepo-turbo-pnpm/
+      *.json
     single/
       nextjs-tailwind.json
       nextjs-ts-tailwind.json
       react-vite-shadcn-tailwind.json
+      react-vite-tailwind-landing.json
       react-vite-tailwind.json
       react-vite-ts-shadcn-tailwind.json
+      react-vite-ts-tailwind-landing.json
       react-vite-ts-tailwind.json
       vue-vite-tailwind.json
+      vue-vite-ts-tailwind.json
 ```
 
 Generate the publishable templates with:
