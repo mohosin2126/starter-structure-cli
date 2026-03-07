@@ -29,6 +29,9 @@ jobs:
       - name: Validate templates
         run: node ./scripts/check-templates.js
 
+      - name: Check publish version
+        run: node ./scripts/check-publish-version.js
+
       - name: Publish package
         run: npm publish
         env:

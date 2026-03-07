@@ -1,6 +1,6 @@
 {
   "name": "starter-structure-cli",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Scaffold starter projects from your own stack-based template folders",
   "homepage": "https://github.com/mohosin2126/starter-structure-cli#readme",
   "repository": {
@@ -20,9 +20,11 @@
   "scripts": {
     "build:architecture-stubs": "node ./scripts/generate-architecture-stubs.js",
     "build:templates": "node ./scripts/build-templates.js",
+    "check:publish-version": "node ./scripts/check-publish-version.js",
     "check:templates": "node ./scripts/check-templates.js",
     "stats:downloads": "node ./scripts/check-package-usage.js",
-    "prepack": "node ./scripts/build-templates.js && node ./scripts/check-templates.js"
+    "prepack": "node ./scripts/build-templates.js && node ./scripts/check-templates.js",
+    "prepublishOnly": "node ./scripts/check-publish-version.js"
   },
   "bin": {
     "starter-structure-cli": "bin/starter-structure-cli.js"
