@@ -1,12 +1,7 @@
 {
-    "name":  "react-vite-ts-tailwind-express-sequelize-mysql",
-    "output":  "templates/fullstack/react-vite-ts-tailwind-express-sequelize-mysql",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "react-vite-ts-tailwind-express-sequelize-mysql",
-                      "TEMPLATE_ID":  "fullstack/react-vite-ts-tailwind-express-sequelize-mysql",
-                      "DESCRIPTION":  "React + Vite + TypeScript + Tailwind + Express + Sequelize + MySQL fullstack app"
-                  }
+  "name": "react-vite-ts-tailwind-express-sequelize-mysql",
+  "output": "templates/fullstack/react-vite-ts-tailwind-express-sequelize-mysql",
+  "base": [
+    "bases/fullstack/react-vite-ts-tailwind-express-sequelize-mysql/shared"
+  ]
 }

@@ -1,12 +1,7 @@
 {
-    "name":  "nextjs-tailwind-mongoose-mongodb",
-    "output":  "templates/fullstack/nextjs-tailwind-mongoose-mongodb",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "nextjs-tailwind-mongoose-mongodb",
-                      "TEMPLATE_ID":  "fullstack/nextjs-tailwind-mongoose-mongodb",
-                      "DESCRIPTION":  "Next.js + Tailwind + Mongoose + MongoDB fullstack app"
-                  }
+  "name": "nextjs-tailwind-mongoose-mongodb",
+  "output": "templates/fullstack/nextjs-tailwind-mongoose-mongodb",
+  "base": [
+    "bases/fullstack/nextjs-tailwind-mongoose-mongodb/shared"
+  ]
 }

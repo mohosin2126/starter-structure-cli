@@ -1,13 +1,19 @@
-# vue-vite-ts-tailwind-express-prisma-mysql
+# __APP_NAME__
 
-Starter scaffold for `fullstack/vue-vite-ts-tailwind-express-prisma-mysql`.
+Fullstack starter with separate `client/` and `server/` apps.
 
-## Status
+## Structure
 
-This template currently ships as a structured placeholder so it can be discovered, copied, and validated safely.
+- `client/`: frontend app
+- `server/`: API app
 
-## Next Steps
+## Getting started
 
-1. Replace placeholder files with production starter code for Vue + Vite + TypeScript + Tailwind + Express + Prisma + MySQL fullstack app.
-2. Keep scripts and dependencies aligned with the real stack.
-3. Run `npm run build:templates` and `npm run check:templates` before publishing.
+```bash
+npm run setup
+cp .env.example .env
+npm run dev:server
+npm run dev:client
+```
+
+Set the database values in `server/.env` or copy the root values into that app before running migrations or connecting the API.

@@ -1,9 +1,12 @@
 {
   "name": "__APP_NAME__",
   "private": true,
-  "version": "1.0.0",
-  "description": "vue-vite-ts-express-mongoose placeholder starter",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "start": "node -e \"console.log('Replace placeholder template files for monorepo-client-server/vue-vite-ts-express-mongoose.')\""
+    "dev:web": "npm run dev --workspace web",
+    "dev:api": "npm run dev --workspace api",
+    "build": "npm run build --workspaces --if-present"
   }
 }

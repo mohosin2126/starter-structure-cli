@@ -27,7 +27,7 @@ templates/
   single/
 ```
 
-Fully implemented starters include:
+The catalog currently includes authored starter files for:
 
 - `backend-only/express-mongoose-jwt`
 - `backend-only/express-prisma-mysql-jwt`
@@ -43,8 +43,23 @@ Fully implemented starters include:
 - `single/vue-vite-tailwind`
 - `single/vue-vite-ts-tailwind`
 - `frontend-only/react-admin-dashboard`
-
-Other template IDs are currently scaffold-safe placeholders and can be completed incrementally.
+- `fullstack/nextjs-tailwind-mongoose-mongodb`
+- `fullstack/nextjs-tailwind-nextauth-prisma`
+- `fullstack/nextjs-tailwind-prisma-mysql`
+- `fullstack/nextjs-tailwind-prisma-postgres`
+- `fullstack/react-vite-ts-tailwind-express-mongoose`
+- `fullstack/react-vite-ts-tailwind-express-prisma-mysql`
+- `fullstack/react-vite-ts-tailwind-express-prisma-postgres`
+- `fullstack/react-vite-ts-tailwind-express-sequelize-mysql`
+- `fullstack/vue-vite-ts-tailwind-express-mongoose`
+- `fullstack/vue-vite-ts-tailwind-express-prisma-mysql`
+- `monorepo-client-server/nextjs-express-prisma`
+- `monorepo-client-server/react-vite-ts-express-mongoose`
+- `monorepo-client-server/react-vite-ts-express-prisma`
+- `monorepo-client-server/vue-vite-ts-express-mongoose`
+- `monorepo-turbo-pnpm/nextjs-api-express-prisma`
+- `monorepo-turbo-pnpm/nextjs-api-nestjs-prisma`
+- `monorepo-turbo-pnpm/react-vite-api-express-mongoose`
 
 ## Usage
 
@@ -164,13 +179,19 @@ template-sources/
         shared/
       express-mongoose-jwt/
         shared/
-    shared/
-      template-placeholder/
+    fullstack/
+      react-vite-ts-tailwind-express-mongoose/
+        shared/
+      nextjs-tailwind-prisma-mysql/
+        shared/
+    monorepo-client-server/
+      react-vite-ts-express-mongoose/
+        shared/
+    monorepo-turbo-pnpm/
+      react-vite-api-express-mongoose/
         shared/
     single/
       react-vite/
-        shared/
-      placeholder/
         shared/
       nextjs-tailwind/
         shared/

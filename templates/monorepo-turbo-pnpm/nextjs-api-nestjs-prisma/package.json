@@ -1,9 +1,13 @@
 {
   "name": "__APP_NAME__",
   "private": true,
-  "version": "1.0.0",
-  "description": "nextjs-api-nestjs-prisma placeholder starter",
+  "packageManager": "pnpm@10.6.0",
   "scripts": {
-    "start": "node -e \"console.log('Replace placeholder template files for monorepo-turbo-pnpm/nextjs-api-nestjs-prisma.')\""
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.6"
   }
 }

@@ -1,9 +1,28 @@
 {
   "name": "__APP_NAME__",
+  "version": "0.1.0",
   "private": true,
-  "version": "1.0.0",
-  "description": "nextjs-tailwind-prisma-postgres placeholder starter",
   "scripts": {
-    "start": "node -e \"console.log('Replace placeholder template files for fullstack/nextjs-tailwind-prisma-postgres.')\""
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.5.0",
+    "next": "^15.5.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.13",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "^15.5.3",
+    "postcss": "^8.5.6",
+    "prisma": "^6.5.0",
+    "tailwindcss": "^4.1.12"
   }
 }

@@ -1,12 +1,7 @@
 {
-    "name":  "nextjs-tailwind-nextauth-prisma",
-    "output":  "templates/fullstack/nextjs-tailwind-nextauth-prisma",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "nextjs-tailwind-nextauth-prisma",
-                      "TEMPLATE_ID":  "fullstack/nextjs-tailwind-nextauth-prisma",
-                      "DESCRIPTION":  "Next.js + Tailwind + NextAuth + Prisma fullstack app"
-                  }
+  "name": "nextjs-tailwind-nextauth-prisma",
+  "output": "templates/fullstack/nextjs-tailwind-nextauth-prisma",
+  "base": [
+    "bases/fullstack/nextjs-tailwind-nextauth-prisma/shared"
+  ]
 }

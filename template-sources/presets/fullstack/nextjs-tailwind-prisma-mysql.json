@@ -1,12 +1,7 @@
 {
-    "name":  "nextjs-tailwind-prisma-mysql",
-    "output":  "templates/fullstack/nextjs-tailwind-prisma-mysql",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "nextjs-tailwind-prisma-mysql",
-                      "TEMPLATE_ID":  "fullstack/nextjs-tailwind-prisma-mysql",
-                      "DESCRIPTION":  "Next.js + Tailwind + Prisma + MySQL fullstack app"
-                  }
+  "name": "nextjs-tailwind-prisma-mysql",
+  "output": "templates/fullstack/nextjs-tailwind-prisma-mysql",
+  "base": [
+    "bases/fullstack/nextjs-tailwind-prisma-mysql/shared"
+  ]
 }

@@ -1,12 +1,7 @@
 {
-    "name":  "react-vite-ts-tailwind-express-prisma-mysql",
-    "output":  "templates/fullstack/react-vite-ts-tailwind-express-prisma-mysql",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "react-vite-ts-tailwind-express-prisma-mysql",
-                      "TEMPLATE_ID":  "fullstack/react-vite-ts-tailwind-express-prisma-mysql",
-                      "DESCRIPTION":  "React + Vite + TypeScript + Tailwind + Express + Prisma + MySQL fullstack app"
-                  }
+  "name": "react-vite-ts-tailwind-express-prisma-mysql",
+  "output": "templates/fullstack/react-vite-ts-tailwind-express-prisma-mysql",
+  "base": [
+    "bases/fullstack/react-vite-ts-tailwind-express-prisma-mysql/shared"
+  ]
 }

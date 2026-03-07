@@ -1,13 +1,19 @@
-# react-vite-ts-express-mongoose
+# __APP_NAME__
 
-Starter scaffold for `monorepo-client-server/react-vite-ts-express-mongoose`.
+Client and server monorepo starter using npm workspaces.
 
-## Status
+## Workspace apps
 
-This template currently ships as a structured placeholder so it can be discovered, copied, and validated safely.
+- `apps/web`: frontend app
+- `apps/api`: backend API
 
-## Next Steps
+## Getting started
 
-1. Replace placeholder files with production starter code for React + Vite + TypeScript + Express + Mongoose client/server monorepo.
-2. Keep scripts and dependencies aligned with the real stack.
-3. Run `npm run build:templates` and `npm run check:templates` before publishing.
+```bash
+npm install
+cp .env.example .env
+npm run dev:api
+npm run dev:web
+```
+
+Prisma-based variants default to MySQL in the copied API app. Change the provider and `DATABASE_URL` if you want a different database.

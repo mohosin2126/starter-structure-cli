@@ -1,12 +1,7 @@
 {
-    "name":  "nextjs-tailwind-prisma-postgres",
-    "output":  "templates/fullstack/nextjs-tailwind-prisma-postgres",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "nextjs-tailwind-prisma-postgres",
-                      "TEMPLATE_ID":  "fullstack/nextjs-tailwind-prisma-postgres",
-                      "DESCRIPTION":  "Next.js + Tailwind + Prisma + PostgreSQL fullstack app"
-                  }
+  "name": "nextjs-tailwind-prisma-postgres",
+  "output": "templates/fullstack/nextjs-tailwind-prisma-postgres",
+  "base": [
+    "bases/fullstack/nextjs-tailwind-prisma-postgres/shared"
+  ]
 }

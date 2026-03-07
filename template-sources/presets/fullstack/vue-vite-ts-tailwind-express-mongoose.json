@@ -1,12 +1,7 @@
 {
-    "name":  "vue-vite-ts-tailwind-express-mongoose",
-    "output":  "templates/fullstack/vue-vite-ts-tailwind-express-mongoose",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "vue-vite-ts-tailwind-express-mongoose",
-                      "TEMPLATE_ID":  "fullstack/vue-vite-ts-tailwind-express-mongoose",
-                      "DESCRIPTION":  "Vue + Vite + TypeScript + Tailwind + Express + Mongoose fullstack app"
-                  }
+  "name": "vue-vite-ts-tailwind-express-mongoose",
+  "output": "templates/fullstack/vue-vite-ts-tailwind-express-mongoose",
+  "base": [
+    "bases/fullstack/vue-vite-ts-tailwind-express-mongoose/shared"
+  ]
 }

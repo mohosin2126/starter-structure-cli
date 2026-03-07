@@ -1,9 +1,13 @@
 {
   "name": "__APP_NAME__",
   "private": true,
-  "version": "1.0.0",
-  "description": "react-vite-api-express-mongoose placeholder starter",
+  "packageManager": "pnpm@10.6.0",
   "scripts": {
-    "start": "node -e \"console.log('Replace placeholder template files for monorepo-turbo-pnpm/react-vite-api-express-mongoose.')\""
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "turbo": "^2.5.6"
   }
 }

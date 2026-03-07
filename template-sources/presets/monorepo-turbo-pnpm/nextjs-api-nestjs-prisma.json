@@ -1,12 +1,7 @@
 {
-    "name":  "nextjs-api-nestjs-prisma",
-    "output":  "templates/monorepo-turbo-pnpm/nextjs-api-nestjs-prisma",
-    "base":  [
-                 "bases/shared/template-placeholder/shared"
-             ],
-    "variables":  {
-                      "TEMPLATE_NAME":  "nextjs-api-nestjs-prisma",
-                      "TEMPLATE_ID":  "monorepo-turbo-pnpm/nextjs-api-nestjs-prisma",
-                      "DESCRIPTION":  "Turborepo + pnpm + Next.js + NestJS + Prisma monorepo"
-                  }
+  "name": "nextjs-api-nestjs-prisma",
+  "output": "templates/monorepo-turbo-pnpm/nextjs-api-nestjs-prisma",
+  "base": [
+    "bases/monorepo-turbo-pnpm/nextjs-api-nestjs-prisma/shared"
+  ]
 }
