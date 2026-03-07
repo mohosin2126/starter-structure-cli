@@ -1,31 +1,18 @@
 # starter-structure-cli
 
-CLI for scaffolding starter projects from stack-based templates.
+Generate starter projects from stack combinations like `react vite ts tailwind express prisma mysql`.
 
-It lets you generate projects by template name or by natural stack combinations such as `react vite ts tailwind express prisma mysql`.
+The CLI supports direct template selection, interactive prompts, and natural stack queries. It ships with frontend, backend, fullstack, and monorepo starter templates.
 
-## What It Generates
+## Install
 
-The package currently ships templates in these categories:
-
-- `backend-only`
-- `frontend-only`
-- `single`
-- `fullstack`
-- `monorepo-client-server`
-- `monorepo-turbo-pnpm`
-
-Generated templates come from [template-sources](./template-sources). The [templates](./templates) folder is build output and should not be edited by hand.
-
-## Install And Run
-
-Use it directly with `npx`:
+Run with `npx`:
 
 ```bash
 npx starter-structure-cli my-app
 ```
 
-Or install it globally:
+Or install globally:
 
 ```bash
 npm install -g starter-structure-cli
@@ -40,39 +27,39 @@ Interactive mode:
 npx starter-structure-cli my-app
 ```
 
-Exact template:
+Use an exact template:
 
 ```bash
 npx starter-structure-cli my-app --template fullstack/react-vite-ts-tailwind-express-prisma-mysql
 ```
 
-Stack query:
+Use stack tokens:
 
 ```bash
 npx starter-structure-cli my-app react vite ts tailwind express prisma mysql
 ```
 
-Natural language style query:
+Use natural stack words:
 
 ```bash
 npx starter-structure-cli my-app reactjs tailwind css nodejs prisma mysql
 ```
 
-List all templates:
+List templates:
 
 ```bash
 npx starter-structure-cli --list
 ```
 
-## How Template Matching Works
+## How Matching Works
 
-You can select templates in three ways:
+You can select a starter in three ways:
 
-1. Interactive prompts
-2. Exact template path with `--template`
-3. Stack tokens like `react vite ts tailwind`
+1. interactive prompts
+2. exact template path with `--template`
+3. stack tokens like `react vite ts tailwind`
 
-The matcher also normalizes common aliases:
+Common aliases are normalized automatically:
 
 - `reactjs` -> `react`
 - `vuejs` -> `vue`
@@ -80,14 +67,15 @@ The matcher also normalizes common aliases:
 - `typescript` -> `ts`
 - `javascript` -> `js`
 - `tailwindcss` -> `tailwind`
+- `nodejs` -> `node`
 
-It ignores filler words such as `css`, `app`, `project`, `template`, and `with`.
+The matcher also ignores filler words like `css`, `project`, `template`, `app`, and `with`.
 
-If both JavaScript and TypeScript variants exist for the same stack, the CLI prefers TypeScript unless you pass `--language js`.
+If both JavaScript and TypeScript variants exist, TypeScript is preferred unless you pass `--language js`.
 
 ## Common Commands
 
-Choose category and features:
+Choose by category and stack:
 
 ```bash
 npx starter-structure-cli my-app --category fullstack --frontend react --backend express --orm prisma --database mysql
@@ -105,13 +93,13 @@ Force TypeScript:
 npx starter-structure-cli my-app react vite tailwind --language ts
 ```
 
-Skip prompts when the match is already clear:
+Skip prompts when the match is clear:
 
 ```bash
 npx starter-structure-cli my-app react vite ts tailwind -y
 ```
 
-Install dependencies immediately:
+Install dependencies after generation:
 
 ```bash
 npx starter-structure-cli my-app react vite ts tailwind --install
@@ -138,56 +126,29 @@ npx starter-structure-cli my-app react vite ts tailwind --install
 --language ts | js
 ```
 
-## Current Template Catalog
+## Template Categories
 
 ```text
-backend-only/
-  express-mongoose-jwt
-  express-prisma-mysql-jwt
-  express-prisma-mysql-jwt-ts
-
-frontend-only/
-  react-admin-dashboard
-
-single/
-  nextjs-tailwind
-  nextjs-ts-tailwind
-  react-vite-tailwind
-  react-vite-ts-tailwind
-  react-vite-shadcn-tailwind
-  react-vite-ts-shadcn-tailwind
-  react-vite-tailwind-landing
-  react-vite-ts-tailwind-landing
-  vue-vite-tailwind
-  vue-vite-ts-tailwind
-
-fullstack/
-  nextjs-tailwind-mongoose-mongodb
-  nextjs-tailwind-nextauth-prisma
-  nextjs-tailwind-prisma-mysql
-  nextjs-tailwind-prisma-postgres
-  react-vite-ts-tailwind-express-mongoose
-  react-vite-ts-tailwind-express-prisma-mysql
-  react-vite-ts-tailwind-express-prisma-postgres
-  react-vite-ts-tailwind-express-sequelize-mysql
-  vue-vite-ts-tailwind-express-mongoose
-  vue-vite-ts-tailwind-express-prisma-mysql
-
-monorepo-client-server/
-  nextjs-express-prisma
-  react-vite-ts-express-mongoose
-  react-vite-ts-express-prisma
-  vue-vite-ts-express-mongoose
-
-monorepo-turbo-pnpm/
-  nextjs-api-express-prisma
-  nextjs-api-nestjs-prisma
-  react-vite-api-express-mongoose
+backend-only
+frontend-only
+single
+fullstack
+monorepo-client-server
+monorepo-turbo-pnpm
 ```
 
-## Generated Project Structure
+Examples of shipped templates:
 
-Depending on the chosen template, generated projects may look like:
+```text
+backend-only/express-mongoose-jwt
+single/react-vite-ts-tailwind
+fullstack/react-vite-ts-tailwind-express-prisma-mysql
+fullstack/vue-vite-ts-tailwind-express-mongoose
+monorepo-client-server/nextjs-express-prisma
+monorepo-turbo-pnpm/react-vite-api-express-mongoose
+```
+
+## Generated Project Shapes
 
 Fullstack:
 
@@ -215,19 +176,19 @@ my-app/
     api/
 ```
 
-Many templates now include deeper folder scaffolding with starter `index.tsx` files for modules such as components, routes, views, hooks, services, controllers, and data folders.
+Many templates include deeper starter structure for components, routes, views, hooks, services, controllers, and data modules.
 
 ## Placeholder Replacement
 
 During generation the CLI replaces `__APP_NAME__` inside:
 
-- file contents
 - file names
 - folder names
+- text file contents
 
 ## For Template Authors
 
-Source of truth:
+Source folders:
 
 ```text
 template-sources/
@@ -237,20 +198,13 @@ template-sources/
   components/
 ```
 
-Build output:
+Generated output:
 
 ```text
 templates/
 ```
 
-Workflow:
-
-1. Edit files in `template-sources/`
-2. Generate architecture stubs if needed
-3. Build templates
-4. Validate templates
-
-Commands:
+Author workflow:
 
 ```bash
 npm install
@@ -260,31 +214,14 @@ npm run check:templates
 node ./bin/starter-structure-cli.js --list
 ```
 
-## Reusable Source System
-
-Templates are composed from:
-
-- `bases`: shared starter files
-- `layers`: stack-specific or architecture-specific additions
-- `presets`: mapping files that define final output paths
-
-This keeps authored files small and lets multiple templates share the same structure blocks.
-
-## Includes In Text Files
-
-Text files in `template-sources/` can include reusable snippets:
+Reusable include syntax in text files:
 
 ```text
 {{ include: components/readme/getting-started-vite.md }}
-```
-
-Relative includes also work:
-
-```text
 {{ include: ./shared-snippet.md }}
 ```
 
-## Publishing
+## Publish
 
 Before publishing:
 
@@ -293,66 +230,34 @@ npm install
 npm run build:architecture-stubs
 npm run build:templates
 npm run check:templates
-node ./bin/starter-structure-cli.js --list
+npm run check:publish-version
 npm pack --dry-run
 ```
 
-Publish locally:
+Publish from a new version only. If a version already exists on npm, update `package.json` first.
 
-```bash
-npm publish
-```
+GitHub Actions publishing also requires a valid `NPM_TOKEN`.
 
-For GitHub Actions publishing, configure `NPM_TOKEN` and make sure the token allows publish access.
+## Usage Stats
 
-## How To Check Usage
+npm does not provide unique user counts. What you can check reliably is download count.
 
-Important: npm does not give you true unique user counts. What you can measure reliably is download count.
-
-Ways to check usage:
-
-1. Open the npm package page and look at weekly downloads.
-2. Run the local download stats script:
+Local command:
 
 ```bash
 npm run stats:downloads
 ```
 
-You can also check another package name:
+Direct script:
 
 ```bash
 node ./scripts/check-package-usage.js starter-structure-cli
 ```
 
-The script prints:
+## Links
 
-- last week downloads
-- last month downloads
-- package page URL
-
-If you want deeper analytics beyond downloads, use:
-
-- GitHub traffic for repo clones and views
-- a custom API or telemetry endpoint in the CLI
-- issue counts, stars, and dependent repos as secondary signals
-
-## Notes About User Counting
-
-Download count is not the same as:
-
-- unique developers
-- unique companies
-- active projects
-- repeat usage
-
-One developer can download many times, and CI pipelines can also increase the count.
-
-## Development Notes
-
-- Node.js `18+` is required
-- `templates/` is generated output
-- avoid editing generated templates directly
-- use `npm run build:templates` after changing presets, bases, or layers
+- GitHub: [https://github.com/mohosin2126/starter-structure-cli](https://github.com/mohosin2126/starter-structure-cli)
+- Issues: [https://github.com/mohosin2126/starter-structure-cli/issues](https://github.com/mohosin2126/starter-structure-cli/issues)
 
 ## License
 
