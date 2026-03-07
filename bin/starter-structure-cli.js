@@ -309,6 +309,10 @@ function resolveCategories(input) {
 function addDerivedTokens(tokenSet, category) {
   tokenSet.add(category);
 
+  if (!tokenSet.has("ts") && !tokenSet.has("js")) {
+    tokenSet.add("js");
+  }
+
   if (category === "fullstack") {
     tokenSet.add("frontend");
     tokenSet.add("backend");
@@ -658,6 +662,45 @@ function getAvailableFeatureValues(templates, group) {
   ];
 }
 
+function hasExplicitLanguageSelection(comboTokens) {
+  return comboTokens.includes("ts") || comboTokens.includes("js");
+}
+
+function getComparableTemplateSignature(template) {
+  return JSON.stringify({
+    category: template.category,
+    frontend: template.features.frontend,
+    frontendTool: template.features.frontendTool,
+    styling: template.features.styling,
+    backend: template.features.backend,
+    orm: template.features.orm,
+    database: template.features.database,
+    auth: template.features.auth
+  });
+}
+
+function preferTypeScriptCandidates(templates, comboTokens) {
+  if (hasExplicitLanguageSelection(comboTokens) || templates.length <= 1) {
+    return templates;
+  }
+
+  const languageValues = new Set(
+    templates.map((template) => template.features.language).filter(Boolean)
+  );
+
+  if (!languageValues.has("ts") || !languageValues.has("js")) {
+    return templates;
+  }
+
+  const signatures = new Set(templates.map(getComparableTemplateSignature));
+  if (signatures.size !== 1) {
+    return templates;
+  }
+
+  const tsTemplates = templates.filter((template) => template.features.language === "ts");
+  return tsTemplates.length > 0 ? tsTemplates : templates;
+}
+
 async function chooseCategory(templates) {
   const categories = getAvailableCategories(templates);
 
@@ -684,10 +727,22 @@ async function chooseByFeatures(templates) {
   let candidates = [...templates];
 
   for (const group of FILTER_GROUPS) {
-    const values = getAvailableFeatureValues(candidates, group);
+    const values = getAvailableFeatureValues(candidates, group).sort((left, right) => {
+      if (group.key === "language") {
+        if (left === "ts") return -1;
+        if (right === "ts") return 1;
+      }
+
+      return left.localeCompare(right);
+    });
     if (values.length <= 1) {
       continue;
     }
+
+    const initialValue =
+      group.key === "language" && values.includes("ts")
+        ? "ts"
+        : values[0];
 
     const selection = await select({
       message: `Choose ${group.label.toLowerCase()}:`,
@@ -697,7 +752,8 @@ async function chooseByFeatures(templates) {
           value,
           label: humanizeToken(value)
         }))
-      ]
+      ],
+      initialValue
     });
 
     if (isCancel(selection)) {
@@ -824,6 +880,8 @@ async function main() {
     ? [selectedTemplate]
     : filterTemplates(templates, args.category, [...new Set(args.comboTokens)]);
 
+  candidates = preferTypeScriptCandidates(candidates, args.comboTokens);
+
   if (!selectedTemplate && candidates.length === 0) {
     note(
       formatTemplateSummary(templates),
@@ -841,6 +899,7 @@ async function main() {
         return cancel("Cancelled.");
       }
       candidates = candidates.filter((template) => template.category === chosenCategory);
+      candidates = preferTypeScriptCandidates(candidates, args.comboTokens);
     }
 
     if (candidates.length > 1 && args.comboTokens.length === 0) {
