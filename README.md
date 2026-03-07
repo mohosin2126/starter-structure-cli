@@ -10,7 +10,7 @@ Right now the package ships with these backend templates:
 
 The CLI scaffolds from the local `templates/` directory at runtime.
 
-In this repo, `templates/` is generated output and should not be edited by hand. The source of truth lives in `template-sources/`, `build:templates` composes the final publishable templates from shared bases, layers, and presets, and the generated `templates/` folder is gitignored to avoid duplicate maintenance.
+In this repo, `templates/` is generated output and should not be edited by hand. The source of truth lives in `template-sources/`, and `build:templates` composes the final publishable templates from shared bases, layers, and presets.
 
 ## Current templates
 
@@ -68,7 +68,7 @@ node ./scripts/check-templates.js
 node ./bin/starter-structure-cli.js --list
 ```
 
-`check-templates` and the local CLI will generate `templates/` automatically when the generated output is missing or stale.
+`check-templates` and the local CLI can regenerate `templates/` automatically when the generated output is missing or stale.
 
 ## Publish checks
 
