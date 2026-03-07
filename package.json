@@ -18,6 +18,7 @@
     "README.md"
   ],
   "scripts": {
+    "build:templates": "node ./scripts/build-templates.js",
     "check:templates": "node ./scripts/check-templates.js",
     "prepack": "node ./scripts/check-templates.js"
   },

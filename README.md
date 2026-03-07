@@ -10,6 +10,8 @@ Right now the package ships with these backend templates:
 
 The CLI discovers templates from the local `templates/` directory, so you can keep adding new starters by folder name instead of hardcoding each option.
 
+For templates with lots of overlap, reusable source parts can live under `template-sources/` and generate final publishable output into `templates/`.
+
 ## Current template
 
 ```text
@@ -62,6 +64,7 @@ The generator replaces `__APP_NAME__` in copied file contents and file or folder
 
 ```bash
 npm install
+node ./scripts/build-templates.js
 node ./scripts/check-templates.js
 node ./bin/starter-structure-cli.js --list
 ```
@@ -120,6 +123,41 @@ Folder names become searchable stack tokens, so names like `react-vite-ts-tailwi
 ```bash
 npx starter-structure-cli my-app react vite ts tailwind express prisma mysql
 ```
+
+## Reusable template sources
+
+To reduce duplication, shared template code can be composed from:
+
+- a base
+- one or more layers
+- a preset that defines the final output path
+
+Current example:
+
+```text
+template-sources/
+  bases/
+    single/
+      nextjs-tailwind/
+        shared/
+  layers/
+    single/
+      nextjs-tailwind/
+        javascript/
+        typescript/
+  presets/
+    single/
+      nextjs-tailwind.json
+      nextjs-ts-tailwind.json
+```
+
+Generate the publishable templates with:
+
+```bash
+npm run build:templates
+```
+
+This keeps `templates/` as the final scaffold output while letting you maintain shared source files only once.
 
 ## JavaScript and TypeScript variants
 
