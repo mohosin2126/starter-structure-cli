@@ -1,0 +1,10 @@
+{
+  "name": "react-vite-ts-express-mongoose",
+  "output": "templates/monorepo-client-server/react-vite-ts-express-mongoose",
+  "base": [
+    "bases/monorepo-client-server/react-vite-ts-express-mongoose/shared"
+  ],
+  "layers": [
+    "layers/architecture/monorepo-client-server-enterprise-structure/shared"
+  ]
+}

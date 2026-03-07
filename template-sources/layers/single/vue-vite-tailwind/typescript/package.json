@@ -1,0 +1,17 @@
+{
+  "name": "__APP_NAME__",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+{{ include: components/package-json/vue-runtime-dependencies.txt }}
+  },
+  "devDependencies": {
+{{ include: components/package-json/vue-vite-typescript-dev-dependencies.txt }}
+  }
+}

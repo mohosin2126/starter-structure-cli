@@ -1,0 +1,10 @@
+{
+  "name": "vue-vite-ts-tailwind-express-mongoose",
+  "output": "templates/fullstack/vue-vite-ts-tailwind-express-mongoose",
+  "base": [
+    "bases/fullstack/vue-vite-ts-tailwind-express-mongoose/shared"
+  ],
+  "layers": [
+    "layers/architecture/fullstack-enterprise-structure/shared"
+  ]
+}

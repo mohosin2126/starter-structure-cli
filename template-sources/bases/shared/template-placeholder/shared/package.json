@@ -1,0 +1,9 @@
+{
+  "name": "__APP_NAME__",
+  "private": true,
+  "version": "1.0.0",
+  "description": "__TEMPLATE_NAME__ placeholder starter",
+  "scripts": {
+    "start": "node -e \"console.log('Replace placeholder template files for __TEMPLATE_ID__.')\""
+  }
+}

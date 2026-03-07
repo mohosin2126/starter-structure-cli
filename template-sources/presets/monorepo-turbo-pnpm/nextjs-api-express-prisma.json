@@ -1,0 +1,10 @@
+{
+  "name": "nextjs-api-express-prisma",
+  "output": "templates/monorepo-turbo-pnpm/nextjs-api-express-prisma",
+  "base": [
+    "bases/monorepo-turbo-pnpm/nextjs-api-express-prisma/shared"
+  ],
+  "layers": [
+    "layers/architecture/monorepo-web-api-enterprise-structure/shared"
+  ]
+}

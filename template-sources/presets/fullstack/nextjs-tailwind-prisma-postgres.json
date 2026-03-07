@@ -1,0 +1,7 @@
+{
+  "name": "nextjs-tailwind-prisma-postgres",
+  "output": "templates/fullstack/nextjs-tailwind-prisma-postgres",
+  "base": [
+    "bases/fullstack/nextjs-tailwind-prisma-postgres/shared"
+  ]
+}

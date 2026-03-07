@@ -1,0 +1,15 @@
+{
+  "name": "vue-vite-ts-tailwind",
+  "output": "templates/single/vue-vite-ts-tailwind",
+  "base": [
+    "bases/single/vue-vite/shared"
+  ],
+  "layers": [
+    "layers/single/vue-vite-tailwind/shared",
+    "layers/single/vue-vite-tailwind/typescript"
+  ],
+  "variables": {
+    "ENTRY_EXT": "ts",
+    "LANGUAGE": "TypeScript"
+  }
+}

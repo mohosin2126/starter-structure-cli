@@ -13,13 +13,16 @@
   "type": "module",
   "files": [
     "bin",
-    "scripts",
+    "lib",
     "templates",
     "README.md"
   ],
   "scripts": {
+    "build:architecture-stubs": "node ./scripts/generate-architecture-stubs.js",
+    "build:templates": "node ./scripts/build-templates.js",
     "check:templates": "node ./scripts/check-templates.js",
-    "prepack": "node ./scripts/check-templates.js"
+    "stats:downloads": "node ./scripts/check-package-usage.js",
+    "prepack": "node ./scripts/build-templates.js && node ./scripts/check-templates.js"
   },
   "bin": {
     "starter-structure-cli": "bin/starter-structure-cli.js"

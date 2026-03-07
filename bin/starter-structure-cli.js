@@ -4,7 +4,6 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 
 import {
   cancel,
@@ -17,10 +16,7 @@ import {
   text
 } from "@clack/prompts";
 import pc from "picocolors";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const templatesRoot = path.resolve(__dirname, "..", "templates");
+import { ensureTemplatesReady, templatesRoot } from "../lib/template-builder.js";
 
 const CATEGORY_LABELS = {
   fullstack: "Fullstack",
@@ -140,8 +136,10 @@ const TOKEN_ALIASES = {
   next: "nextjs",
   "next-js": "nextjs",
   reactjs: "react",
+  "react-js": "react",
   "react.js": "react",
   vuejs: "vue",
+  "vue-js": "vue",
   "vue.js": "vue",
   tailwindcss: "tailwind",
   "tailwind-css": "tailwind",
@@ -150,9 +148,31 @@ const TOKEN_ALIASES = {
   postgresql: "postgres",
   mongo: "mongodb",
   mongodb: "mongodb",
+  node: "backend",
+  nodejs: "backend",
+  "node-js": "backend",
+  mono: "monorepo",
   turborepo: "turbo",
   monorepo: "monorepo"
 };
+
+const NOISE_TOKENS = new Set([
+  "and",
+  "app",
+  "apps",
+  "application",
+  "boilerplate",
+  "css",
+  "database",
+  "db",
+  "for",
+  "project",
+  "repo",
+  "stack",
+  "starter",
+  "template",
+  "with"
+]);
 
 const SUPPORTED_PACKAGE_MANAGERS = new Set(["npm", "pnpm", "yarn"]);
 
@@ -166,7 +186,12 @@ function normalizeToken(value) {
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
 
-  return TOKEN_ALIASES[cleaned] ?? cleaned;
+  const normalized = TOKEN_ALIASES[cleaned] ?? cleaned;
+  if (!normalized || NOISE_TOKENS.has(normalized)) {
+    return "";
+  }
+
+  return normalized;
 }
 
 function tokenize(value) {
@@ -308,6 +333,10 @@ function resolveCategories(input) {
 
 function addDerivedTokens(tokenSet, category) {
   tokenSet.add(category);
+
+  if (!tokenSet.has("ts") && !tokenSet.has("js")) {
+    tokenSet.add("js");
+  }
 
   if (category === "fullstack") {
     tokenSet.add("frontend");
@@ -658,6 +687,45 @@ function getAvailableFeatureValues(templates, group) {
   ];
 }
 
+function hasExplicitLanguageSelection(comboTokens) {
+  return comboTokens.includes("ts") || comboTokens.includes("js");
+}
+
+function getComparableTemplateSignature(template) {
+  return JSON.stringify({
+    category: template.category,
+    frontend: template.features.frontend,
+    frontendTool: template.features.frontendTool,
+    styling: template.features.styling,
+    backend: template.features.backend,
+    orm: template.features.orm,
+    database: template.features.database,
+    auth: template.features.auth
+  });
+}
+
+function preferTypeScriptCandidates(templates, comboTokens) {
+  if (hasExplicitLanguageSelection(comboTokens) || templates.length <= 1) {
+    return templates;
+  }
+
+  const languageValues = new Set(
+    templates.map((template) => template.features.language).filter(Boolean)
+  );
+
+  if (!languageValues.has("ts") || !languageValues.has("js")) {
+    return templates;
+  }
+
+  const signatures = new Set(templates.map(getComparableTemplateSignature));
+  if (signatures.size !== 1) {
+    return templates;
+  }
+
+  const tsTemplates = templates.filter((template) => template.features.language === "ts");
+  return tsTemplates.length > 0 ? tsTemplates : templates;
+}
+
 async function chooseCategory(templates) {
   const categories = getAvailableCategories(templates);
 
@@ -684,10 +752,22 @@ async function chooseByFeatures(templates) {
   let candidates = [...templates];
 
   for (const group of FILTER_GROUPS) {
-    const values = getAvailableFeatureValues(candidates, group);
+    const values = getAvailableFeatureValues(candidates, group).sort((left, right) => {
+      if (group.key === "language") {
+        if (left === "ts") return -1;
+        if (right === "ts") return 1;
+      }
+
+      return left.localeCompare(right);
+    });
     if (values.length <= 1) {
       continue;
     }
+
+    const initialValue =
+      group.key === "language" && values.includes("ts")
+        ? "ts"
+        : values[0];
 
     const selection = await select({
       message: `Choose ${group.label.toLowerCase()}:`,
@@ -697,7 +777,8 @@ async function chooseByFeatures(templates) {
           value,
           label: humanizeToken(value)
         }))
-      ]
+      ],
+      initialValue
     });
 
     if (isCancel(selection)) {
@@ -776,6 +857,7 @@ function formatTemplateSummary(templates) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  ensureTemplatesReady();
   const templates = discoverTemplates(templatesRoot);
 
   if (args.help) {
@@ -784,7 +866,9 @@ async function main() {
   }
 
   if (templates.length === 0) {
-    throw new Error(`No templates found in ${templatesRoot}`);
+    throw new Error(
+      `No templates found in ${templatesRoot}. Build them with "npm run build:templates".`
+    );
   }
 
   if (args.list) {
@@ -824,6 +908,8 @@ async function main() {
     ? [selectedTemplate]
     : filterTemplates(templates, args.category, [...new Set(args.comboTokens)]);
 
+  candidates = preferTypeScriptCandidates(candidates, args.comboTokens);
+
   if (!selectedTemplate && candidates.length === 0) {
     note(
       formatTemplateSummary(templates),
@@ -841,6 +927,7 @@ async function main() {
         return cancel("Cancelled.");
       }
       candidates = candidates.filter((template) => template.category === chosenCategory);
+      candidates = preferTypeScriptCandidates(candidates, args.comboTokens);
     }
 
     if (candidates.length > 1 && args.comboTokens.length === 0) {

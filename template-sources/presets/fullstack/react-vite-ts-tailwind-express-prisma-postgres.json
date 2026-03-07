@@ -1,0 +1,10 @@
+{
+  "name": "react-vite-ts-tailwind-express-prisma-postgres",
+  "output": "templates/fullstack/react-vite-ts-tailwind-express-prisma-postgres",
+  "base": [
+    "bases/fullstack/react-vite-ts-tailwind-express-prisma-postgres/shared"
+  ],
+  "layers": [
+    "layers/architecture/fullstack-enterprise-structure/shared"
+  ]
+}

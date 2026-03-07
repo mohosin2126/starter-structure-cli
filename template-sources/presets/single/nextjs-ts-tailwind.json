@@ -1,0 +1,10 @@
+{
+  "name": "nextjs-ts-tailwind",
+  "output": "templates/single/nextjs-ts-tailwind",
+  "base": [
+    "bases/single/nextjs-tailwind/shared"
+  ],
+  "layers": [
+    "layers/single/nextjs-tailwind/typescript"
+  ]
+}

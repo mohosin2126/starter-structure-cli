@@ -1,0 +1,7 @@
+{
+  "name": "nextjs-tailwind-nextauth-prisma",
+  "output": "templates/fullstack/nextjs-tailwind-nextauth-prisma",
+  "base": [
+    "bases/fullstack/nextjs-tailwind-nextauth-prisma/shared"
+  ]
+}
