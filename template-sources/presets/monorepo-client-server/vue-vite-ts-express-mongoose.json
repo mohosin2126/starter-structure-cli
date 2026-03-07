@@ -3,5 +3,8 @@
   "output": "templates/monorepo-client-server/vue-vite-ts-express-mongoose",
   "base": [
     "bases/monorepo-client-server/vue-vite-ts-express-mongoose/shared"
+  ],
+  "layers": [
+    "layers/architecture/monorepo-client-server-enterprise-structure/shared"
   ]
 }

@@ -3,5 +3,8 @@
   "output": "templates/fullstack/react-vite-ts-tailwind-express-mongoose",
   "base": [
     "bases/fullstack/react-vite-ts-tailwind-express-mongoose/shared"
+  ],
+  "layers": [
+    "layers/architecture/fullstack-enterprise-structure/shared"
   ]
 }

@@ -3,5 +3,8 @@
   "output": "templates/monorepo-client-server/react-vite-ts-express-prisma",
   "base": [
     "bases/monorepo-client-server/react-vite-ts-express-prisma/shared"
+  ],
+  "layers": [
+    "layers/architecture/monorepo-client-server-enterprise-structure/shared"
   ]
 }

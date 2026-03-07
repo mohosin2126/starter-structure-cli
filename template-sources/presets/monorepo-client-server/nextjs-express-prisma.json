@@ -3,5 +3,8 @@
   "output": "templates/monorepo-client-server/nextjs-express-prisma",
   "base": [
     "bases/monorepo-client-server/nextjs-express-prisma/shared"
+  ],
+  "layers": [
+    "layers/architecture/monorepo-web-api-enterprise-structure/shared"
   ]
 }

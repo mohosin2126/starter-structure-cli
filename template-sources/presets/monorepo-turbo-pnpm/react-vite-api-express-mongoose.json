@@ -3,5 +3,8 @@
   "output": "templates/monorepo-turbo-pnpm/react-vite-api-express-mongoose",
   "base": [
     "bases/monorepo-turbo-pnpm/react-vite-api-express-mongoose/shared"
+  ],
+  "layers": [
+    "layers/architecture/monorepo-web-api-enterprise-structure/shared"
   ]
 }

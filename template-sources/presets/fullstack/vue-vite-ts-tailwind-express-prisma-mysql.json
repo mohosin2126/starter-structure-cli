@@ -3,5 +3,8 @@
   "output": "templates/fullstack/vue-vite-ts-tailwind-express-prisma-mysql",
   "base": [
     "bases/fullstack/vue-vite-ts-tailwind-express-prisma-mysql/shared"
+  ],
+  "layers": [
+    "layers/architecture/fullstack-enterprise-structure/shared"
   ]
 }

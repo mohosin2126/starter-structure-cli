@@ -136,8 +136,10 @@ const TOKEN_ALIASES = {
   next: "nextjs",
   "next-js": "nextjs",
   reactjs: "react",
+  "react-js": "react",
   "react.js": "react",
   vuejs: "vue",
+  "vue-js": "vue",
   "vue.js": "vue",
   tailwindcss: "tailwind",
   "tailwind-css": "tailwind",
@@ -146,9 +148,31 @@ const TOKEN_ALIASES = {
   postgresql: "postgres",
   mongo: "mongodb",
   mongodb: "mongodb",
+  node: "backend",
+  nodejs: "backend",
+  "node-js": "backend",
+  mono: "monorepo",
   turborepo: "turbo",
   monorepo: "monorepo"
 };
+
+const NOISE_TOKENS = new Set([
+  "and",
+  "app",
+  "apps",
+  "application",
+  "boilerplate",
+  "css",
+  "database",
+  "db",
+  "for",
+  "project",
+  "repo",
+  "stack",
+  "starter",
+  "template",
+  "with"
+]);
 
 const SUPPORTED_PACKAGE_MANAGERS = new Set(["npm", "pnpm", "yarn"]);
 
@@ -162,7 +186,12 @@ function normalizeToken(value) {
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
 
-  return TOKEN_ALIASES[cleaned] ?? cleaned;
+  const normalized = TOKEN_ALIASES[cleaned] ?? cleaned;
+  if (!normalized || NOISE_TOKENS.has(normalized)) {
+    return "";
+  }
+
+  return normalized;
 }
 
 function tokenize(value) {

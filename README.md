@@ -1,320 +1,359 @@
 # starter-structure-cli
 
-Scaffold starter projects from your own stack-based template folders.
+CLI for scaffolding starter projects from stack-based templates.
 
-The package now ships templates across these categories:
+It lets you generate projects by template name or by natural stack combinations such as `react vite ts tailwind express prisma mysql`.
 
-- `backend-only/*`
-- `frontend-only/*`
-- `single/*`
-- `fullstack/*`
-- `monorepo-client-server/*`
-- `monorepo-turbo-pnpm/*`
+## What It Generates
 
-The CLI scaffolds from the local `templates/` directory at runtime.
+The package currently ships templates in these categories:
 
-In this repo, `templates/` is generated output and should not be edited by hand. The source of truth lives in `template-sources/`, and `build:templates` composes the final publishable templates from shared bases, layers, and presets.
+- `backend-only`
+- `frontend-only`
+- `single`
+- `fullstack`
+- `monorepo-client-server`
+- `monorepo-turbo-pnpm`
 
-## Current templates
+Generated templates come from [template-sources](./template-sources). The [templates](./templates) folder is build output and should not be edited by hand.
 
-```text
-templates/
-  backend-only/
-  frontend-only/
-  fullstack/
-  monorepo-client-server/
-  monorepo-turbo-pnpm/
-  single/
-```
+## Install And Run
 
-The catalog currently includes authored starter files for:
-
-- `backend-only/express-mongoose-jwt`
-- `backend-only/express-prisma-mysql-jwt`
-- `backend-only/express-prisma-mysql-jwt-ts`
-- `single/nextjs-tailwind`
-- `single/nextjs-ts-tailwind`
-- `single/react-vite-tailwind`
-- `single/react-vite-ts-tailwind`
-- `single/react-vite-shadcn-tailwind`
-- `single/react-vite-ts-shadcn-tailwind`
-- `single/react-vite-tailwind-landing`
-- `single/react-vite-ts-tailwind-landing`
-- `single/vue-vite-tailwind`
-- `single/vue-vite-ts-tailwind`
-- `frontend-only/react-admin-dashboard`
-- `fullstack/nextjs-tailwind-mongoose-mongodb`
-- `fullstack/nextjs-tailwind-nextauth-prisma`
-- `fullstack/nextjs-tailwind-prisma-mysql`
-- `fullstack/nextjs-tailwind-prisma-postgres`
-- `fullstack/react-vite-ts-tailwind-express-mongoose`
-- `fullstack/react-vite-ts-tailwind-express-prisma-mysql`
-- `fullstack/react-vite-ts-tailwind-express-prisma-postgres`
-- `fullstack/react-vite-ts-tailwind-express-sequelize-mysql`
-- `fullstack/vue-vite-ts-tailwind-express-mongoose`
-- `fullstack/vue-vite-ts-tailwind-express-prisma-mysql`
-- `monorepo-client-server/nextjs-express-prisma`
-- `monorepo-client-server/react-vite-ts-express-mongoose`
-- `monorepo-client-server/react-vite-ts-express-prisma`
-- `monorepo-client-server/vue-vite-ts-express-mongoose`
-- `monorepo-turbo-pnpm/nextjs-api-express-prisma`
-- `monorepo-turbo-pnpm/nextjs-api-nestjs-prisma`
-- `monorepo-turbo-pnpm/react-vite-api-express-mongoose`
-
-## Usage
-
-Interactive:
+Use it directly with `npx`:
 
 ```bash
 npx starter-structure-cli my-app
 ```
 
-Direct selection by template:
+Or install it globally:
 
 ```bash
-npx starter-structure-cli my-api --template backend-only/express-mongoose-jwt
+npm install -g starter-structure-cli
+starter-structure-cli my-app
 ```
 
-Direct stack query:
+## Quick Start
+
+Interactive mode:
 
 ```bash
-npx starter-structure-cli my-api express mongoose jwt
+npx starter-structure-cli my-app
 ```
 
-If both JavaScript and TypeScript variants exist for the same stack, the CLI defaults to TypeScript unless you explicitly pass `--language js`.
-
-List available templates:
+Exact template:
 
 ```bash
-npx starter-structure-cli --list
+npx starter-structure-cli my-app --template fullstack/react-vite-ts-tailwind-express-prisma-mysql
 ```
 
-## Placeholder replacement
-
-The generator replaces `__APP_NAME__` in copied file contents and file or folder names.
-
-## Local development
-
-```bash
-npm install
-node ./scripts/check-templates.js
-node ./bin/starter-structure-cli.js --list
-```
-
-`check-templates` and the local CLI can regenerate `templates/` automatically when the generated output is missing or stale.
-
-## Publish checks
-
-Before publishing, verify:
-
-```bash
-npm.cmd install
-node .\scripts\build-templates.js
-node .\scripts\check-templates.js
-node .\bin\starter-structure-cli.js --list
-npm.cmd pack --dry-run
-```
-
-`prepack` runs template validation automatically and blocks publish if a template directory has no files.
-
-## Publish to npm
-
-You can publish locally:
-
-```bash
-npm.cmd publish
-```
-
-Or publish from GitHub Actions using the workflow in `.github/workflows/publish.yml`.
-
-For GitHub Actions publishing, add a repository secret named `NPM_TOKEN` and use a granular npm token that has:
-
-- publish or write access
-- `bypass 2FA` enabled
-
-Without `bypass 2FA`, npm will fail in CI with `EOTP`.
-
-For a step-by-step beginner note based on how this package was actually published, see `NPM_PUBLISH_NOTE.md`.
-
-## Add more templates
-
-Add or update template source files under `template-sources/`, then generate the publishable output into `templates/`.
-
-Example:
-
-```text
-template-sources/
-  bases/
-  layers/
-  presets/
-```
-
-Then run:
-
-```bash
-npm run build:templates
-```
-
-Generated folder names under `templates/` become searchable stack tokens, so names like `react-vite-ts-tailwind-express-prisma-mysql` can be matched by queries such as:
+Stack query:
 
 ```bash
 npx starter-structure-cli my-app react vite ts tailwind express prisma mysql
 ```
 
-## Reusable template sources
+Natural language style query:
 
-To reduce duplication, shared template code can be composed from:
+```bash
+npx starter-structure-cli my-app reactjs tailwind css nodejs prisma mysql
+```
 
-- a base
-- one or more layers
-- a preset that defines the final output path
+List all templates:
 
-Current examples:
+```bash
+npx starter-structure-cli --list
+```
+
+## How Template Matching Works
+
+You can select templates in three ways:
+
+1. Interactive prompts
+2. Exact template path with `--template`
+3. Stack tokens like `react vite ts tailwind`
+
+The matcher also normalizes common aliases:
+
+- `reactjs` -> `react`
+- `vuejs` -> `vue`
+- `next` -> `nextjs`
+- `typescript` -> `ts`
+- `javascript` -> `js`
+- `tailwindcss` -> `tailwind`
+
+It ignores filler words such as `css`, `app`, `project`, `template`, and `with`.
+
+If both JavaScript and TypeScript variants exist for the same stack, the CLI prefers TypeScript unless you pass `--language js`.
+
+## Common Commands
+
+Choose category and features:
+
+```bash
+npx starter-structure-cli my-app --category fullstack --frontend react --backend express --orm prisma --database mysql
+```
+
+Force JavaScript:
+
+```bash
+npx starter-structure-cli my-app react vite tailwind --language js
+```
+
+Force TypeScript:
+
+```bash
+npx starter-structure-cli my-app react vite tailwind --language ts
+```
+
+Skip prompts when the match is already clear:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind -y
+```
+
+Install dependencies immediately:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind --install
+```
+
+## CLI Options
+
+```text
+-h, --help
+--list
+-y, --yes
+--install
+--no-install
+-p, --package-manager npm | pnpm | yarn
+-c, --category fullstack | frontend-only | single | backend-only | monorepo | turbo
+-t, --template <category/slug>
+--stack, --combo "<tokens>"
+--frontend react | nextjs | vue
+--backend express | nestjs | fastify
+--styling tailwind | shadcn
+--orm prisma | mongoose | sequelize
+--database mongodb | mysql | postgres
+--auth jwt | nextauth
+--language ts | js
+```
+
+## Current Template Catalog
+
+```text
+backend-only/
+  express-mongoose-jwt
+  express-prisma-mysql-jwt
+  express-prisma-mysql-jwt-ts
+
+frontend-only/
+  react-admin-dashboard
+
+single/
+  nextjs-tailwind
+  nextjs-ts-tailwind
+  react-vite-tailwind
+  react-vite-ts-tailwind
+  react-vite-shadcn-tailwind
+  react-vite-ts-shadcn-tailwind
+  react-vite-tailwind-landing
+  react-vite-ts-tailwind-landing
+  vue-vite-tailwind
+  vue-vite-ts-tailwind
+
+fullstack/
+  nextjs-tailwind-mongoose-mongodb
+  nextjs-tailwind-nextauth-prisma
+  nextjs-tailwind-prisma-mysql
+  nextjs-tailwind-prisma-postgres
+  react-vite-ts-tailwind-express-mongoose
+  react-vite-ts-tailwind-express-prisma-mysql
+  react-vite-ts-tailwind-express-prisma-postgres
+  react-vite-ts-tailwind-express-sequelize-mysql
+  vue-vite-ts-tailwind-express-mongoose
+  vue-vite-ts-tailwind-express-prisma-mysql
+
+monorepo-client-server/
+  nextjs-express-prisma
+  react-vite-ts-express-mongoose
+  react-vite-ts-express-prisma
+  vue-vite-ts-express-mongoose
+
+monorepo-turbo-pnpm/
+  nextjs-api-express-prisma
+  nextjs-api-nestjs-prisma
+  react-vite-api-express-mongoose
+```
+
+## Generated Project Structure
+
+Depending on the chosen template, generated projects may look like:
+
+Fullstack:
+
+```text
+my-app/
+  client/
+  server/
+```
+
+Client/server monorepo:
+
+```text
+my-app/
+  apps/
+    client/
+    server/
+```
+
+Turbo monorepo:
+
+```text
+my-app/
+  apps/
+    web/
+    api/
+```
+
+Many templates now include deeper folder scaffolding with starter `index.tsx` files for modules such as components, routes, views, hooks, services, controllers, and data folders.
+
+## Placeholder Replacement
+
+During generation the CLI replaces `__APP_NAME__` inside:
+
+- file contents
+- file names
+- folder names
+
+## For Template Authors
+
+Source of truth:
 
 ```text
 template-sources/
   bases/
-    backend-only/
-      express-prisma-mysql-jwt/
-        shared/
-      express-mongoose-jwt/
-        shared/
-    fullstack/
-      react-vite-ts-tailwind-express-mongoose/
-        shared/
-      nextjs-tailwind-prisma-mysql/
-        shared/
-    monorepo-client-server/
-      react-vite-ts-express-mongoose/
-        shared/
-    monorepo-turbo-pnpm/
-      react-vite-api-express-mongoose/
-        shared/
-    single/
-      react-vite/
-        shared/
-      nextjs-tailwind/
-        shared/
   layers/
-    backend-only/
-      express-prisma-mysql-jwt/
-        javascript/
-        typescript/
-    frontend-only/
-      react-admin-dashboard/
-        javascript/
-    single/
-      nextjs-tailwind/
-        javascript/
-        typescript/
-      react-vite-tailwind/
-        shared/
-        javascript/
-        typescript/
-      react-vite-shadcn-tailwind/
-        shared/
-        javascript/
-        typescript/
   presets/
-    backend-only/
-      express-mongoose-jwt.json
-      express-prisma-mysql-jwt.json
-      express-prisma-mysql-jwt-ts.json
-    frontend-only/
-      react-admin-dashboard.json
-    fullstack/
-      *.json
-    monorepo-client-server/
-      *.json
-    monorepo-turbo-pnpm/
-      *.json
-    single/
-      nextjs-tailwind.json
-      nextjs-ts-tailwind.json
-      react-vite-shadcn-tailwind.json
-      react-vite-tailwind-landing.json
-      react-vite-tailwind.json
-      react-vite-ts-shadcn-tailwind.json
-      react-vite-ts-tailwind-landing.json
-      react-vite-ts-tailwind.json
-      vue-vite-tailwind.json
-      vue-vite-ts-tailwind.json
+  components/
 ```
 
-Generate the publishable templates with:
-
-```bash
-npm run build:templates
-```
-
-This keeps `template-sources/` as the only authored source while `templates/` stays a generated scaffold output.
-
-`prepack` runs `build:templates` before validation, so npm publish always packages the latest generated templates.
-
-## Reusable components in source templates
-
-You can keep small reusable blocks under `template-sources/components/` and include them inside text files from any base or layer.
-
-Example:
+Build output:
 
 ```text
-template-sources/
-  components/
-    readme/
-      getting-started-vite.md
-    styles/
-      base-ui.css
+templates/
 ```
 
-Then call them inside a source file:
+Workflow:
+
+1. Edit files in `template-sources/`
+2. Generate architecture stubs if needed
+3. Build templates
+4. Validate templates
+
+Commands:
+
+```bash
+npm install
+npm run build:architecture-stubs
+npm run build:templates
+npm run check:templates
+node ./bin/starter-structure-cli.js --list
+```
+
+## Reusable Source System
+
+Templates are composed from:
+
+- `bases`: shared starter files
+- `layers`: stack-specific or architecture-specific additions
+- `presets`: mapping files that define final output paths
+
+This keeps authored files small and lets multiple templates share the same structure blocks.
+
+## Includes In Text Files
+
+Text files in `template-sources/` can include reusable snippets:
 
 ```text
 {{ include: components/readme/getting-started-vite.md }}
 ```
 
-You can also include relative files:
+Relative includes also work:
 
 ```text
 {{ include: ./shared-snippet.md }}
 ```
 
-This works for text files such as `.md`, `.css`, `.js`, `.ts`, `.json`, `.html`, and similar template source files.
+## Publishing
 
-## JavaScript and TypeScript variants
-
-If you want both JavaScript and TypeScript versions of the same template, keep both folders for the same stack.
-
-Example for `single/`:
-
-```text
-templates/
-  single/
-    nextjs-tailwind/
-    nextjs-ts-tailwind/
-    nextjs-tailwind-landing-seo/
-    nextjs-ts-tailwind-landing-seo/
-    react-vite-shadcn-tailwind/
-    react-vite-ts-shadcn-tailwind/
-    react-vite-tailwind/
-    react-vite-ts-tailwind/
-    react-vite-tailwind-landing/
-    react-vite-ts-tailwind-landing/
-    vue-vite-tailwind/
-    vue-vite-ts-tailwind/
-```
-
-Rules:
-
-- TypeScript templates should include `ts` in the folder name
-- JavaScript templates can omit `ts`, or include `js` if you want to be explicit
-- if both variants match the same stack, the CLI defaults to TypeScript
-- users can force JavaScript with `--language js`
-- users can force TypeScript with `--language ts`
-
-Examples:
+Before publishing:
 
 ```bash
-npx starter-structure-cli my-app react vite tailwind
-npx starter-structure-cli my-app react vite tailwind --language js
-npx starter-structure-cli my-app react vite tailwind --language ts
+npm install
+npm run build:architecture-stubs
+npm run build:templates
+npm run check:templates
+node ./bin/starter-structure-cli.js --list
+npm pack --dry-run
 ```
+
+Publish locally:
+
+```bash
+npm publish
+```
+
+For GitHub Actions publishing, configure `NPM_TOKEN` and make sure the token allows publish access.
+
+## How To Check Usage
+
+Important: npm does not give you true unique user counts. What you can measure reliably is download count.
+
+Ways to check usage:
+
+1. Open the npm package page and look at weekly downloads.
+2. Run the local download stats script:
+
+```bash
+npm run stats:downloads
+```
+
+You can also check another package name:
+
+```bash
+node ./scripts/check-package-usage.js starter-structure-cli
+```
+
+The script prints:
+
+- last week downloads
+- last month downloads
+- package page URL
+
+If you want deeper analytics beyond downloads, use:
+
+- GitHub traffic for repo clones and views
+- a custom API or telemetry endpoint in the CLI
+- issue counts, stars, and dependent repos as secondary signals
+
+## Notes About User Counting
+
+Download count is not the same as:
+
+- unique developers
+- unique companies
+- active projects
+- repeat usage
+
+One developer can download many times, and CI pipelines can also increase the count.
+
+## Development Notes
+
+- Node.js `18+` is required
+- `templates/` is generated output
+- avoid editing generated templates directly
+- use `npm run build:templates` after changing presets, bases, or layers
+
+## License
+
+MIT

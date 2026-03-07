@@ -4,8 +4,8 @@ Client and server monorepo starter using npm workspaces.
 
 ## Workspace apps
 
-- `apps/web`: frontend app
-- `apps/api`: backend API
+- `apps/client`: frontend app (`web` workspace)
+- `apps/server`: backend API (`api` workspace)
 
 ## Getting started
 
