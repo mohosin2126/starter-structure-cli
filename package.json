@@ -1,10 +1,34 @@
 {
   "name": "starter-structure-cli",
-  "version": "0.1.0",
-  "description": "Scaffold a folder structure with demo files",
+  "version": "0.2.0",
+  "description": "Scaffold starter projects from your own stack-based template folders",
   "type": "module",
+  "files": [
+    "bin",
+    "scripts",
+    "templates",
+    "README.md"
+  ],
+  "scripts": {
+    "check:templates": "node ./scripts/check-templates.js",
+    "prepack": "node ./scripts/check-templates.js"
+  },
   "bin": {
     "starter-structure-cli": "./bin/starter-structure-cli.js"
+  },
+  "keywords": [
+    "cli",
+    "scaffold",
+    "starter",
+    "template",
+    "boilerplate"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "picocolors": "^1.1.1"
   },
   "license": "MIT"
 }
