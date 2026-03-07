@@ -13,7 +13,7 @@
   "type": "module",
   "files": [
     "bin",
-    "scripts",
+    "lib",
     "templates",
     "README.md"
   ],

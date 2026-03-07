@@ -4,7 +4,6 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 
 import {
   cancel,
@@ -17,10 +16,7 @@ import {
   text
 } from "@clack/prompts";
 import pc from "picocolors";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const templatesRoot = path.resolve(__dirname, "..", "templates");
+import { ensureTemplatesReady, templatesRoot } from "../lib/template-builder.js";
 
 const CATEGORY_LABELS = {
   fullstack: "Fullstack",
@@ -832,6 +828,7 @@ function formatTemplateSummary(templates) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  ensureTemplatesReady();
   const templates = discoverTemplates(templatesRoot);
 
   if (args.help) {
@@ -840,7 +837,9 @@ async function main() {
   }
 
   if (templates.length === 0) {
-    throw new Error(`No templates found in ${templatesRoot}`);
+    throw new Error(
+      `No templates found in ${templatesRoot}. Build them with "npm run build:templates".`
+    );
   }
 
   if (args.list) {

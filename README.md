@@ -8,9 +8,9 @@ Right now the package ships with these backend templates:
 - `backend-only/express-prisma-mysql-jwt`
 - `backend-only/express-prisma-mysql-jwt-ts`
 
-The CLI discovers templates from the local `templates/` directory, so you can keep adding new starters by folder name instead of hardcoding each option.
+The CLI scaffolds from the local `templates/` directory at runtime.
 
-In this repo, `templates/` is generated output. The source of truth lives in `template-sources/`, and `build:templates` composes the final publishable templates from shared bases, layers, and presets.
+In this repo, `templates/` is generated output and should not be edited by hand. The source of truth lives in `template-sources/`, `build:templates` composes the final publishable templates from shared bases, layers, and presets, and the generated `templates/` folder is gitignored to avoid duplicate maintenance.
 
 ## Current templates
 
@@ -64,10 +64,11 @@ The generator replaces `__APP_NAME__` in copied file contents and file or folder
 
 ```bash
 npm install
-node ./scripts/build-templates.js
 node ./scripts/check-templates.js
 node ./bin/starter-structure-cli.js --list
 ```
+
+`check-templates` and the local CLI will generate `templates/` automatically when the generated output is missing or stale.
 
 ## Publish checks
 
@@ -75,6 +76,7 @@ Before publishing, verify:
 
 ```bash
 npm.cmd install
+node .\scripts\build-templates.js
 node .\scripts\check-templates.js
 node .\bin\starter-structure-cli.js --list
 npm.cmd pack --dry-run
@@ -189,7 +191,7 @@ Generate the publishable templates with:
 npm run build:templates
 ```
 
-This keeps `templates/` as the final scaffold output while letting you maintain shared source files only once.
+This keeps `template-sources/` as the only authored source while `templates/` stays a generated scaffold output.
 
 `prepack` runs `build:templates` before validation, so npm publish always packages the latest generated templates.
 
