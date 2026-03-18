@@ -1,0 +1,11 @@
+{
+  "name": "nextjs-ts-shadcn-tailwind",
+  "output": "templates/single/nextjs-ts-shadcn-tailwind",
+  "base": [
+    "bases/single/nextjs-tailwind/shared"
+  ],
+  "layers": [
+    "layers/feature/shadcn/nextjs/shared",
+    "layers/language/typescript/single/nextjs-shadcn-tailwind"
+  ]
+}

@@ -5,8 +5,8 @@
     "bases/single/react-vite/shared"
   ],
   "layers": [
-    "layers/single/react-vite-shadcn-tailwind/shared",
-    "layers/single/react-vite-shadcn-tailwind/typescript"
+    "layers/feature/shadcn/react-vite/shared",
+    "layers/language/typescript/single/react-vite-shadcn-tailwind"
   ],
   "variables": {
     "ENTRY_EXT": "tsx",

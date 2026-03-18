@@ -1,6 +1,6 @@
 {
   "name": "starter-structure-cli",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "description": "Scaffold starter projects from your own stack-based template folders",
   "homepage": "https://github.com/mohosin2126/starter-structure-cli#readme",
   "repository": {

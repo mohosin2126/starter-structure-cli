@@ -1,0 +1,10 @@
+{
+  "name": "fastify-prisma-postgres-ts",
+  "output": "templates/backend-only/fastify-prisma-postgres-ts",
+  "base": [
+    "bases/backend-only/fastify-prisma-postgres/shared"
+  ],
+  "layers": [
+    "layers/language/typescript/backend-only/fastify-prisma-postgres"
+  ]
+}

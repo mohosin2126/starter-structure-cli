@@ -1,0 +1,47 @@
+# __APP_NAME__
+
+Express + Prisma + PostgreSQL + JWT starter API with TypeScript.
+
+## Features
+
+- TypeScript-first Express API setup
+- Prisma ORM with PostgreSQL
+- User registration and login
+- JWT authentication middleware
+- Structured `src/` layout
+- Ready-to-edit Prisma schema
+
+## Project structure
+
+```text
+.
+├── prisma/
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   └── utils/
+├── .env.example
+├── .gitignore
+├── package.json
+└── tsconfig.json
+```
+
+## Getting started
+
+```bash
+npm install
+cp .env.example .env
+npx prisma generate
+npx prisma migrate dev --name init
+npm run dev
+```
+
+
+## API endpoints
+
+- `GET /api/health`
+- `POST /api/auth/register`
+- `POST /api/auth/login`
+- `GET /api/auth/me`
