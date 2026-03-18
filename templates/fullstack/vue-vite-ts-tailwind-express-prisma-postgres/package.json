@@ -1,0 +1,10 @@
+{
+  "name": "__APP_NAME__",
+  "private": true,
+  "scripts": {
+    "setup": "npm install --prefix client && npm install --prefix server",
+    "dev:client": "npm --prefix client run dev",
+    "dev:server": "npm --prefix server run dev",
+    "build:client": "npm --prefix client run build"
+  }
+}
