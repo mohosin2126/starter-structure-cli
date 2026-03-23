@@ -7,50 +7,45 @@ import { cancel, intro, note, outro } from "@clack/prompts";
 import pc from "picocolors";
 
 import { parseArgs, printHelp } from "../lib/cli/args.js";
+import { discoverTemplates, listTemplates } from "../lib/cli/catalog.js";
 import {
-  discoverTemplates,
-  formatTemplateSummary,
-  listTemplates
-} from "../lib/cli/catalog.js";
-import {
-  preferMinimalMatches,
-  preferTypeScriptCandidates,
-  filterTemplates,
-  resolveTemplateByReference
-} from "../lib/cli/matching.js";
-import {
-  chooseByFeatures,
-  chooseCategory,
-  choosePackageManager,
-  chooseTemplate,
-  confirmInstallDependencies,
-  promptForProjectName
-} from "../lib/cli/prompts.js";
-import {
-  getSuggestedPackageManager,
   getTargetDirectoryError,
   getTemplateDirectoryError,
   installDependencies,
-  scaffoldTemplate,
-  validateProjectName
+  scaffoldTemplate
 } from "../lib/cli/scaffold.js";
-import { SUPPORTED_PACKAGE_MANAGERS } from "../lib/cli/constants.js";
+import {
+  hasExplicitSelectionInput,
+  resolveInstallPreference,
+  resolvePackageManagerChoice,
+  resolveProjectName,
+  resolveTemplateSelection
+} from "../lib/cli/workflow.js";
 import { ensureTemplatesReady, templatesRoot } from "../lib/template-builder.js";
+
+function resolveStep(result) {
+  if (!result.cancelled) {
+    return result.value;
+  }
+
+  if (result.note) {
+    note(result.note.body, result.note.title);
+  }
+
+  cancel(result.cancelMessage);
+  return undefined;
+}
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const hasExplicitSelectionInput = Boolean(
-    args.templateRef ||
-    args.category ||
-    args.comboTokens.length > 0
-  );
-  ensureTemplatesReady();
-  const templates = discoverTemplates(templatesRoot);
 
   if (args.help) {
     printHelp();
     return;
   }
+
+  ensureTemplatesReady();
+  const templates = discoverTemplates(templatesRoot);
 
   if (templates.length === 0) {
     throw new Error(
@@ -65,99 +60,30 @@ async function main() {
 
   intro(pc.cyan("starter-structure-cli"));
 
-  let projectName = args.projectName;
+  const explicitSelectionInput = hasExplicitSelectionInput(args);
+
+  const projectName = resolveStep(await resolveProjectName(args));
   if (!projectName) {
-    projectName = await promptForProjectName(validateProjectName);
-    if (!projectName) {
-      return cancel("Cancelled.");
-    }
-  } else {
-    const validationError = validateProjectName(projectName);
-    if (validationError) {
-      return cancel(validationError);
-    }
+    return;
   }
 
-  let selectedTemplate =
-    args.templateRef ? resolveTemplateByReference(templates, args.templateRef) : undefined;
-
-  if (args.templateRef && !selectedTemplate) {
-    note(formatTemplateSummary(templates), "Available templates");
-    return cancel(`Template not found: ${args.templateRef}`);
-  }
-
-  let candidates = selectedTemplate
-    ? [selectedTemplate]
-    : filterTemplates(templates, args.category, [...new Set(args.comboTokens)]);
-
-  candidates = preferTypeScriptCandidates(candidates, args.comboTokens);
-  candidates = preferMinimalMatches(candidates, args.comboTokens);
-
-  if (!selectedTemplate && candidates.length === 0) {
-    note(
-      formatTemplateSummary(templates),
-      "No template matched the requested combination"
-    );
-    return cancel("Adjust your stack filters or choose a template explicitly.");
-  }
-
+  const selectedTemplate = resolveStep(await resolveTemplateSelection(args, templates));
   if (!selectedTemplate) {
-    const categoryWasSupplied = Boolean(args.category);
-
-    if (!categoryWasSupplied) {
-      const chosenCategory = await chooseCategory(candidates);
-      if (!chosenCategory) {
-        return cancel("Cancelled.");
-      }
-      candidates = candidates.filter((template) => template.category === chosenCategory);
-      candidates = preferTypeScriptCandidates(candidates, args.comboTokens);
-    }
-
-    if (candidates.length > 1 && args.comboTokens.length === 0) {
-      const narrowed = await chooseByFeatures(candidates);
-      if (!narrowed) {
-        return cancel("Cancelled.");
-      }
-      candidates = narrowed;
-    }
-
-    if (candidates.length > 1 && args.yes) {
-      note(formatTemplateSummary(candidates), "Multiple templates still match");
-      return cancel("Use --template or add more stack filters.");
-    }
-
-    selectedTemplate = await chooseTemplate(candidates);
-    if (!selectedTemplate) {
-      return cancel("Cancelled.");
-    }
+    return;
   }
 
-  let packageManager = args.packageManager;
+  const packageManager = resolveStep(
+    await resolvePackageManagerChoice(args, selectedTemplate, explicitSelectionInput)
+  );
   if (!packageManager) {
-    const suggested = getSuggestedPackageManager(selectedTemplate);
-    packageManager =
-      args.yes || hasExplicitSelectionInput
-        ? suggested
-        : await choosePackageManager(suggested);
-
-    if (!packageManager) {
-      return cancel("Cancelled.");
-    }
+    return;
   }
 
-  if (!SUPPORTED_PACKAGE_MANAGERS.has(packageManager)) {
-    return cancel(`Unsupported package manager: ${packageManager}`);
-  }
-
-  let shouldInstall = args.install;
+  const shouldInstall = resolveStep(
+    await resolveInstallPreference(args, explicitSelectionInput)
+  );
   if (shouldInstall === undefined) {
-    shouldInstall =
-      args.yes || hasExplicitSelectionInput
-        ? false
-        : await confirmInstallDependencies();
-    if (shouldInstall === undefined) {
-      return cancel("Cancelled.");
-    }
+    return;
   }
 
   const targetDir = path.resolve(process.cwd(), projectName);
