@@ -1,5 +1,7 @@
 import https from "node:https";
+import path from "node:path";
 import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
 
 function fetchRegistryVersion(packageName, version) {
   const encodedName = packageName
@@ -39,7 +41,14 @@ function fetchRegistryVersion(packageName, version) {
 }
 
 async function main() {
-  const packageJson = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
+  const defaultPackageJsonPath = path.resolve(
+    path.dirname(fileURLToPath(import.meta.url)),
+    "../package.json",
+  );
+  const packageJsonPath = process.argv[2]
+    ? path.resolve(process.cwd(), process.argv[2])
+    : defaultPackageJsonPath;
+  const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
   const { name, version } = packageJson;
 
   const result = await fetchRegistryVersion(name, version);

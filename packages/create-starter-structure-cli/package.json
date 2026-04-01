@@ -1,0 +1,38 @@
+{
+  "name": "create-starter-structure-cli",
+  "version": "0.3.0",
+  "description": "npm create wrapper for starter-structure-cli",
+  "type": "module",
+  "bin": {
+    "create-starter-structure-cli": "bin/create-starter-structure-cli.js"
+  },
+  "files": [
+    "bin",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohosin2126/starter-structure-cli.git"
+  },
+  "homepage": "https://github.com/mohosin2126/starter-structure-cli#readme",
+  "bugs": {
+    "url": "https://github.com/mohosin2126/starter-structure-cli/issues"
+  },
+  "keywords": [
+    "create",
+    "cli",
+    "scaffold",
+    "starter",
+    "template"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "starter-structure-cli": "0.3.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

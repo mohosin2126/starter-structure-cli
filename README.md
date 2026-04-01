@@ -12,12 +12,20 @@ Run with `npx`:
 npx starter-structure-cli my-app
 ```
 
+Or use the standard `npm create` flow:
+
+```bash
+npm create starter-structure-cli@latest my-app
+```
+
 Or install globally:
 
 ```bash
 npm install -g starter-structure-cli
 starter-structure-cli my-app
 ```
+
+If you run `npm install starter-structure-cli`, npm only installs the CLI package into the current folder. It does not run the scaffolder automatically.
 
 More setup details are available in [docs/installation.md](docs/installation.md).
 
@@ -27,6 +35,12 @@ Interactive mode:
 
 ```bash
 npx starter-structure-cli my-app
+```
+
+Create flow:
+
+```bash
+npm create starter-structure-cli@latest my-app
 ```
 
 Exact template:
@@ -52,6 +66,7 @@ npx starter-structure-cli --list
 ```text
 bin                 CLI entry point
 lib                 Template build helpers
+packages            Companion publishable packages like npm create wrappers
 scripts             Build, validation, stats, and publish utilities
 template-sources    Bases, layers, presets, and reusable components
 templates           Generated templates used by the CLI
@@ -76,6 +91,7 @@ Useful commands:
 npm install
 npm run build:architecture-stubs
 npm run build:templates
+npm run check:create-package
 npm run check:templates
 node ./bin/starter-structure-cli.js --list
 ```
