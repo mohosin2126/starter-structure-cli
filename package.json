@@ -20,6 +20,7 @@
   "scripts": {
     "build:architecture-stubs": "node ./scripts/generate-architecture-stubs.js",
     "build:templates": "node ./scripts/build-templates.js",
+    "check:create-package": "node ./scripts/check-create-package.js",
     "check:publish-version": "node ./scripts/check-publish-version.js",
     "check:templates": "node ./scripts/check-templates.js",
     "stats:downloads": "node ./scripts/check-package-usage.js",

@@ -1,6 +1,6 @@
 # Installation
 
-`starter-structure-cli` can be used directly with `npx` or developed locally from this repository.
+`starter-structure-cli` can be used with `npx`, the standard `npm create` flow, or developed locally from this repository.
 
 ## Requirements
 
@@ -15,12 +15,20 @@ Run the CLI without installing it globally:
 npx starter-structure-cli my-app
 ```
 
+Run it with the npm create convention:
+
+```bash
+npm create starter-structure-cli@latest my-app
+```
+
 Or install it globally:
 
 ```bash
 npm install -g starter-structure-cli
 starter-structure-cli my-app
 ```
+
+If you run `npm install starter-structure-cli`, npm will only install the package into the current directory. It will not execute the scaffolder for you.
 
 ## Local Repository Setup
 
@@ -41,6 +49,7 @@ Build generated templates from `template-sources`:
 ```bash
 npm run build:architecture-stubs
 npm run build:templates
+npm run check:create-package
 ```
 
 Validate generated templates:
