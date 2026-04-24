@@ -55,6 +55,12 @@ Choose a package manager:
 npx starter-structure-cli my-app --package-manager bun
 ```
 
+Generate into a custom directory:
+
+```bash
+npx starter-structure-cli my-app --output ./apps/my-app
+```
+
 Stack tokens:
 
 ```bash

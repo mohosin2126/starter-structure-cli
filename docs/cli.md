@@ -28,6 +28,12 @@ Structured filters:
 npx starter-structure-cli my-app --category fullstack --frontend react --backend express --orm prisma --database mysql
 ```
 
+Custom output directory:
+
+```bash
+npx starter-structure-cli my-app --output ./apps/my-app
+```
+
 List templates:
 
 ```bash
@@ -70,6 +76,7 @@ Use `--dry-run` to see the selected template, target directory status, match exp
 --list
 --dry-run
 --explain
+-o, --output <dir>
 -y, --yes
 --install
 --no-install

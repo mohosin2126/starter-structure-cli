@@ -83,7 +83,7 @@ async function main() {
     return;
   }
 
-  const targetDir = path.resolve(process.cwd(), projectName);
+  const targetDir = path.resolve(process.cwd(), args.outputDir ?? projectName);
 
   if (args.dryRun) {
     note(

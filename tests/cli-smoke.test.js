@@ -54,6 +54,13 @@ test("parseArgs accepts bun as a package manager value", () => {
   assert.equal(args.packageManager, "bun");
 });
 
+test("parseArgs parses a custom output directory", () => {
+  const args = parseArgs(["my-app", "--output", "./apps/my-app"]);
+
+  assert.equal(args.projectName, "my-app");
+  assert.equal(args.outputDir, "./apps/my-app");
+});
+
 test("parseArgs rejects unknown flags", () => {
   assert.throws(
     () => parseArgs(["my-app", "--pakage-manager", "pnpm"]),
