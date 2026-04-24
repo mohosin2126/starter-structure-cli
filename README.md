@@ -61,6 +61,12 @@ List templates:
 npx starter-structure-cli --list
 ```
 
+Preview a match without writing files:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind --dry-run --explain
+```
+
 ## Repository Structure
 
 ```text
@@ -94,6 +100,7 @@ npm run build:templates
 npm run check:create-package
 npm run check:templates
 node ./bin/starter-structure-cli.js --list
+node ./bin/starter-structure-cli.js my-app react vite ts --dry-run --explain
 ```
 
 For template changes, update `template-sources/` first and then rebuild `templates/`.

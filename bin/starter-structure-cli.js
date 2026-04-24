@@ -15,6 +15,10 @@ import {
   scaffoldTemplate
 } from "../lib/cli/scaffold.js";
 import {
+  formatDryRunPreview,
+  formatTemplateExplanation
+} from "../lib/cli/preview.js";
+import {
   hasExplicitSelectionInput,
   resolveInstallPreference,
   resolvePackageManagerChoice,
@@ -79,6 +83,27 @@ async function main() {
     return;
   }
 
+  const targetDir = path.resolve(process.cwd(), projectName);
+
+  if (args.dryRun) {
+    note(
+      formatDryRunPreview({
+        template: selectedTemplate,
+        projectName,
+        targetDir,
+        packageManager,
+        comboTokens: args.comboTokens
+      }),
+      "No files were created"
+    );
+    outro(pc.green("Dry run complete."));
+    return;
+  }
+
+  if (args.explain) {
+    note(formatTemplateExplanation(selectedTemplate, args.comboTokens), "Template match");
+  }
+
   const shouldInstall = resolveStep(
     await resolveInstallPreference(args, explicitSelectionInput)
   );
@@ -86,7 +111,6 @@ async function main() {
     return;
   }
 
-  const targetDir = path.resolve(process.cwd(), projectName);
   const targetError = getTargetDirectoryError(targetDir);
   if (targetError) {
     return cancel(targetError);

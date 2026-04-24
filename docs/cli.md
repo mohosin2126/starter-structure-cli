@@ -34,6 +34,12 @@ List templates:
 npx starter-structure-cli --list
 ```
 
+Preview a selected template without creating files:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind --dry-run --explain
+```
+
 ## Matching Rules
 
 The CLI can resolve a starter in three main ways:
@@ -55,11 +61,15 @@ Filler words like `project`, `template`, `starter`, `app`, and `with` are ignore
 
 If both JavaScript and TypeScript variants match the same stack, TypeScript is preferred unless you pass `--language js`.
 
+Use `--dry-run` to see the selected template, target directory status, match explanation, and a preview of files that would be created. Add `--explain` to show why a template matched during either a dry run or a real scaffold.
+
 ## Options
 
 ```text
 -h, --help
 --list
+--dry-run
+--explain
 -y, --yes
 --install
 --no-install
