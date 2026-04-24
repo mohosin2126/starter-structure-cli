@@ -73,7 +73,7 @@ Use `--dry-run` to see the selected template, target directory status, match exp
 -y, --yes
 --install
 --no-install
--p, --package-manager npm | pnpm | yarn
+-p, --package-manager npm | pnpm | yarn | bun
 -c, --category fullstack | frontend-only | single | backend-only | monorepo | turbo
 -t, --template <category/slug>
 --stack, --combo "<tokens>"

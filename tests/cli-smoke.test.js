@@ -47,6 +47,13 @@ test("parseArgs parses dry-run and explain flags", () => {
   assert.deepEqual(args.comboTokens, ["react", "vite"]);
 });
 
+test("parseArgs accepts bun as a package manager value", () => {
+  const args = parseArgs(["my-app", "--package-manager", "bun"]);
+
+  assert.equal(args.projectName, "my-app");
+  assert.equal(args.packageManager, "bun");
+});
+
 test("parseArgs rejects unknown flags", () => {
   assert.throws(
     () => parseArgs(["my-app", "--pakage-manager", "pnpm"]),

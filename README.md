@@ -49,6 +49,12 @@ Exact template:
 npx starter-structure-cli my-app --template fullstack/react-vite-ts-tailwind-express-prisma-mysql
 ```
 
+Choose a package manager:
+
+```bash
+npx starter-structure-cli my-app --package-manager bun
+```
+
 Stack tokens:
 
 ```bash
