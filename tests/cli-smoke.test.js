@@ -18,6 +18,25 @@ import { templatesRoot } from "../lib/template-builder.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, "..");
+const cliPath = path.join(repoRoot, "bin", "starter-structure-cli.js");
+
+function collectTextFiles(dir, collected = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const entryPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      collectTextFiles(entryPath, collected);
+      continue;
+    }
+
+    const content = fs.readFileSync(entryPath);
+    if (!content.includes(0)) {
+      collected.push(entryPath);
+    }
+  }
+
+  return collected;
+}
 
 test("parseArgs parses supported flags and stack tokens", () => {
   const args = parseArgs([
@@ -183,6 +202,53 @@ test("resolveTemplateSelection resolves exact and stack-based template matches",
 
   assert.equal(stackMatch.cancelled, false);
   assert.equal(stackMatch.value.id, "fullstack/react-vite-ts-tailwind-express-prisma-mysql");
+});
+
+test("cli scaffolds a project and replaces app name placeholders", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "starter-structure-cli-scaffold-"));
+  const projectName = "scaffold-smoke-app";
+  const targetDir = path.join(tempDir, projectName);
+  const command = process.execPath;
+
+  try {
+    const result = spawnSync(
+      command,
+      [
+        cliPath,
+        projectName,
+        "--template",
+        "single/react-vite-ts-tailwind",
+        "--no-install"
+      ],
+      {
+        cwd: tempDir,
+        encoding: "utf8"
+      }
+    );
+
+    const combinedOutput = `${result.stdout ?? ""}\n${result.stderr ?? ""}`;
+
+    assert.equal(result.status, 0, combinedOutput);
+    assert.ok(fs.existsSync(path.join(targetDir, "package.json")));
+    assert.ok(fs.existsSync(path.join(targetDir, "README.md")));
+    assert.ok(fs.existsSync(path.join(targetDir, "src", "main.tsx")));
+
+    const packageJson = JSON.parse(
+      fs.readFileSync(path.join(targetDir, "package.json"), "utf8")
+    );
+    const readme = fs.readFileSync(path.join(targetDir, "README.md"), "utf8");
+    const textFiles = collectTextFiles(targetDir);
+    const filesWithPlaceholders = textFiles.filter((filePath) =>
+      fs.readFileSync(filePath, "utf8").includes("__APP_NAME__")
+    );
+
+    assert.equal(packageJson.name, projectName);
+    assert.match(readme, new RegExp(`# ${projectName}`));
+    assert.deepEqual(filesWithPlaceholders, []);
+    assert.match(combinedOutput, /Created scaffold-smoke-app/);
+  } finally {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 });
 
 test("publish smoke test includes the postinstall script in the tarball", () => {
