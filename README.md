@@ -49,6 +49,18 @@ Exact template:
 npx starter-structure-cli my-app --template fullstack/react-vite-ts-tailwind-express-prisma-mysql
 ```
 
+Choose a package manager:
+
+```bash
+npx starter-structure-cli my-app --package-manager bun
+```
+
+Generate into a custom directory:
+
+```bash
+npx starter-structure-cli my-app --output ./apps/my-app
+```
+
 Stack tokens:
 
 ```bash
@@ -59,6 +71,33 @@ List templates:
 
 ```bash
 npx starter-structure-cli --list
+```
+
+Check project health:
+
+```bash
+npx starter-structure-cli --doctor
+```
+
+Print machine-readable output:
+
+```bash
+npx starter-structure-cli --list --json
+npx starter-structure-cli --doctor --json
+npx starter-structure-cli my-app react vite ts --dry-run --json
+```
+
+Inspect one template:
+
+```bash
+npx starter-structure-cli --template-info single/react-vite-ts-tailwind
+npx starter-structure-cli --template-info single/react-vite-ts-tailwind --json
+```
+
+Preview a match without writing files:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind --dry-run --explain
 ```
 
 ## Repository Structure
@@ -94,6 +133,7 @@ npm run build:templates
 npm run check:create-package
 npm run check:templates
 node ./bin/starter-structure-cli.js --list
+node ./bin/starter-structure-cli.js my-app react vite ts --dry-run --explain
 ```
 
 For template changes, update `template-sources/` first and then rebuild `templates/`.

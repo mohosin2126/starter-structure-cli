@@ -7,7 +7,12 @@ import { cancel, intro, note, outro } from "@clack/prompts";
 import pc from "picocolors";
 
 import { parseArgs, printHelp } from "../lib/cli/args.js";
-import { discoverTemplates, listTemplates } from "../lib/cli/catalog.js";
+import {
+  discoverTemplates,
+  listTemplates,
+  serializeTemplateList
+} from "../lib/cli/catalog.js";
+import { createDoctorReport, formatDoctorReport } from "../lib/cli/doctor.js";
 import {
   getTargetDirectoryError,
   getTemplateDirectoryError,
@@ -15,12 +20,19 @@ import {
   scaffoldTemplate
 } from "../lib/cli/scaffold.js";
 import {
+  createDryRunPreview,
+  formatDryRunPreview,
+  formatTemplateExplanation
+} from "../lib/cli/preview.js";
+import {
   hasExplicitSelectionInput,
   resolveInstallPreference,
   resolvePackageManagerChoice,
   resolveProjectName,
   resolveTemplateSelection
 } from "../lib/cli/workflow.js";
+import { createTemplateInfo, formatTemplateInfo } from "../lib/cli/template-info.js";
+import { resolveTemplateByReference } from "../lib/cli/matching.js";
 import { ensureTemplatesReady, templatesRoot } from "../lib/template-builder.js";
 
 function resolveStep(result) {
@@ -44,6 +56,15 @@ async function main() {
     return;
   }
 
+  if (args.doctor) {
+    const report = createDoctorReport();
+    console.log(args.json ? JSON.stringify(report, null, 2) : formatDoctorReport(report));
+    if (!report.ok) {
+      process.exitCode = 1;
+    }
+    return;
+  }
+
   ensureTemplatesReady();
   const templates = discoverTemplates(templatesRoot);
 
@@ -53,12 +74,40 @@ async function main() {
     );
   }
 
-  if (args.list) {
-    listTemplates(templates);
+  if (args.templateInfoRef) {
+    const template = resolveTemplateByReference(templates, args.templateInfoRef);
+
+    if (!template) {
+      const message = `Template not found: ${args.templateInfoRef}`;
+      if (args.json) {
+        console.log(JSON.stringify({ ok: false, error: message }, null, 2));
+        process.exitCode = 1;
+        return;
+      }
+
+      throw new Error(message);
+    }
+
+    console.log(
+      args.json
+        ? JSON.stringify(createTemplateInfo(template), null, 2)
+        : formatTemplateInfo(template)
+    );
     return;
   }
 
-  intro(pc.cyan("starter-structure-cli"));
+  if (args.list) {
+    if (args.json) {
+      console.log(JSON.stringify(serializeTemplateList(templates), null, 2));
+    } else {
+      listTemplates(templates);
+    }
+    return;
+  }
+
+  if (!args.json) {
+    intro(pc.cyan("starter-structure-cli"));
+  }
 
   const explicitSelectionInput = hasExplicitSelectionInput(args);
 
@@ -79,6 +128,44 @@ async function main() {
     return;
   }
 
+  const targetDir = path.resolve(process.cwd(), args.outputDir ?? projectName);
+
+  if (args.dryRun) {
+    if (args.json) {
+      console.log(
+        JSON.stringify(
+          createDryRunPreview({
+            template: selectedTemplate,
+            projectName,
+            targetDir,
+            packageManager,
+            comboTokens: args.comboTokens
+          }),
+          null,
+          2
+        )
+      );
+      return;
+    }
+
+    note(
+      formatDryRunPreview({
+        template: selectedTemplate,
+        projectName,
+        targetDir,
+        packageManager,
+        comboTokens: args.comboTokens
+      }),
+      "No files were created"
+    );
+    outro(pc.green("Dry run complete."));
+    return;
+  }
+
+  if (args.explain) {
+    note(formatTemplateExplanation(selectedTemplate, args.comboTokens), "Template match");
+  }
+
   const shouldInstall = resolveStep(
     await resolveInstallPreference(args, explicitSelectionInput)
   );
@@ -86,7 +173,6 @@ async function main() {
     return;
   }
 
-  const targetDir = path.resolve(process.cwd(), projectName);
   const targetError = getTargetDirectoryError(targetDir);
   if (targetError) {
     return cancel(targetError);

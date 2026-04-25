@@ -28,10 +28,43 @@ Structured filters:
 npx starter-structure-cli my-app --category fullstack --frontend react --backend express --orm prisma --database mysql
 ```
 
+Custom output directory:
+
+```bash
+npx starter-structure-cli my-app --output ./apps/my-app
+```
+
 List templates:
 
 ```bash
 npx starter-structure-cli --list
+```
+
+Check the package and template health:
+
+```bash
+npx starter-structure-cli --doctor
+```
+
+Print machine-readable output:
+
+```bash
+npx starter-structure-cli --list --json
+npx starter-structure-cli --doctor --json
+npx starter-structure-cli my-app react vite ts --dry-run --json
+```
+
+Inspect one template:
+
+```bash
+npx starter-structure-cli --template-info single/react-vite-ts-tailwind
+npx starter-structure-cli --template-info single/react-vite-ts-tailwind --json
+```
+
+Preview a selected template without creating files:
+
+```bash
+npx starter-structure-cli my-app react vite ts tailwind --dry-run --explain
 ```
 
 ## Matching Rules
@@ -55,17 +88,25 @@ Filler words like `project`, `template`, `starter`, `app`, and `with` are ignore
 
 If both JavaScript and TypeScript variants match the same stack, TypeScript is preferred unless you pass `--language js`.
 
+Use `--dry-run` to see the selected template, target directory status, match explanation, and a preview of files that would be created. Add `--explain` to show why a template matched during either a dry run or a real scaffold.
+
 ## Options
 
 ```text
 -h, --help
 --list
+--doctor
+--dry-run
+--explain
+--json
+-o, --output <dir>
 -y, --yes
 --install
 --no-install
--p, --package-manager npm | pnpm | yarn
+-p, --package-manager npm | pnpm | yarn | bun
 -c, --category fullstack | frontend-only | single | backend-only | monorepo | turbo
 -t, --template <category/slug>
+--template-info, --info <category/slug>
 --stack, --combo "<tokens>"
 --frontend react | nextjs | vue
 --backend express | nestjs | fastify

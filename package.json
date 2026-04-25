@@ -14,6 +14,7 @@
   "files": [
     "bin",
     "lib",
+    "scripts/postinstall-message.js",
     "templates",
     "README.md"
   ],
@@ -23,7 +24,9 @@
     "check:create-package": "node ./scripts/check-create-package.js",
     "check:publish-version": "node ./scripts/check-publish-version.js",
     "check:templates": "node ./scripts/check-templates.js",
+    "postinstall": "node ./scripts/postinstall-message.js",
     "stats:downloads": "node ./scripts/check-package-usage.js",
+    "test": "node --test tests/cli-smoke.test.js",
     "prepack": "node ./scripts/build-templates.js && node ./scripts/check-templates.js",
     "prepublishOnly": "node ./scripts/check-publish-version.js"
   },
