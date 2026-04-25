@@ -64,6 +64,9 @@ Single-app and backend-only templates keep a single project root.
 ## Template Discovery
 
 The CLI discovers templates by walking the generated `templates/` directory.
+Template labels and descriptions are derived from each template's category, slug,
+and stack tokens, so new generated templates automatically appear in list and JSON
+output with useful metadata.
 
 Use:
 
@@ -72,3 +75,11 @@ npx starter-structure-cli --list
 ```
 
 to see the currently available output set.
+
+Use:
+
+```bash
+npx starter-structure-cli --list --json
+```
+
+to inspect template ids, descriptions, features, and tokens from scripts.

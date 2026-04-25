@@ -151,8 +151,23 @@ test("serializeTemplateList returns JSON-safe template data", () => {
 
   assert.ok(serialized.templates.length > 0);
   assert.equal(serialized.templates[0].absolutePath, undefined);
+  assert.equal(typeof serialized.templates[0].description, "string");
+  assert.ok(serialized.templates[0].description.length > 0);
   assert.ok(Array.isArray(serialized.templates[0].tokens));
   assert.doesNotThrow(() => JSON.stringify(serialized));
+});
+
+test("discovered templates include useful descriptions", () => {
+  const templates = discoverTemplates(templatesRoot);
+  const template = templates.find(
+    (item) => item.id === "single/react-vite-ts-tailwind"
+  );
+
+  assert.ok(template, "expected react vite ts template to be available");
+  assert.match(template.description, /React/);
+  assert.match(template.description, /Vite/);
+  assert.match(template.description, /TypeScript/);
+  assert.match(template.description, /Tailwind CSS/);
 });
 
 test("doctor report passes for the committed template catalog", () => {
