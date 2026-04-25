@@ -46,6 +46,14 @@ Check the package and template health:
 npx starter-structure-cli --doctor
 ```
 
+Print machine-readable output:
+
+```bash
+npx starter-structure-cli --list --json
+npx starter-structure-cli --doctor --json
+npx starter-structure-cli my-app react vite ts --dry-run --json
+```
+
 Preview a selected template without creating files:
 
 ```bash
@@ -83,6 +91,7 @@ Use `--dry-run` to see the selected template, target directory status, match exp
 --doctor
 --dry-run
 --explain
+--json
 -o, --output <dir>
 -y, --yes
 --install

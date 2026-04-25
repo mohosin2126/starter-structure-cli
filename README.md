@@ -79,6 +79,14 @@ Check project health:
 npx starter-structure-cli --doctor
 ```
 
+Print machine-readable output:
+
+```bash
+npx starter-structure-cli --list --json
+npx starter-structure-cli --doctor --json
+npx starter-structure-cli my-app react vite ts --dry-run --json
+```
+
 Preview a match without writing files:
 
 ```bash

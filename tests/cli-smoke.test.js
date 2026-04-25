@@ -8,9 +8,9 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { parseArgs } from "../lib/cli/args.js";
-import { discoverTemplates } from "../lib/cli/catalog.js";
+import { discoverTemplates, serializeTemplateList } from "../lib/cli/catalog.js";
 import { createDoctorReport, formatDoctorReport } from "../lib/cli/doctor.js";
-import { formatDryRunPreview } from "../lib/cli/preview.js";
+import { createDryRunPreview, formatDryRunPreview } from "../lib/cli/preview.js";
 import { validateProjectName } from "../lib/cli/scaffold.js";
 import { resolveTemplateSelection } from "../lib/cli/workflow.js";
 import { templatesRoot } from "../lib/template-builder.js";
@@ -54,6 +54,13 @@ test("parseArgs parses the doctor flag", () => {
   assert.equal(args.doctor, true);
 });
 
+test("parseArgs parses the json flag", () => {
+  const args = parseArgs(["--list", "--json"]);
+
+  assert.equal(args.list, true);
+  assert.equal(args.json, true);
+});
+
 test("parseArgs accepts bun as a package manager value", () => {
   const args = parseArgs(["my-app", "--package-manager", "bun"]);
 
@@ -95,6 +102,38 @@ test("formatDryRunPreview describes the selected template without scaffolding", 
   assert.match(preview, /Template: single\/react-vite-ts-tailwind/);
   assert.match(preview, /react -> React/);
   assert.match(preview, /Files to create:/);
+});
+
+test("createDryRunPreview returns serializable dry-run data", () => {
+  const templates = discoverTemplates(templatesRoot);
+  const template = templates.find(
+    (item) => item.id === "single/react-vite-ts-tailwind"
+  );
+
+  assert.ok(template, "expected react vite ts template to be available");
+
+  const preview = createDryRunPreview({
+    template,
+    projectName: "my-app",
+    targetDir: path.join(os.tmpdir(), "starter-structure-cli-preview-my-app"),
+    packageManager: "npm",
+    comboTokens: ["react", "vite", "ts"]
+  });
+
+  assert.equal(preview.template.id, "single/react-vite-ts-tailwind");
+  assert.deepEqual(preview.matchedTokens.map((item) => item.token), ["react", "vite", "ts"]);
+  assert.ok(preview.files.includes("package.json"));
+  assert.doesNotThrow(() => JSON.stringify(preview));
+});
+
+test("serializeTemplateList returns JSON-safe template data", () => {
+  const templates = discoverTemplates(templatesRoot);
+  const serialized = serializeTemplateList(templates);
+
+  assert.ok(serialized.templates.length > 0);
+  assert.equal(serialized.templates[0].absolutePath, undefined);
+  assert.ok(Array.isArray(serialized.templates[0].tokens));
+  assert.doesNotThrow(() => JSON.stringify(serialized));
 });
 
 test("doctor report passes for the committed template catalog", () => {
