@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 
 import { parseArgs } from "../lib/cli/args.js";
 import { discoverTemplates } from "../lib/cli/catalog.js";
+import { createDoctorReport, formatDoctorReport } from "../lib/cli/doctor.js";
 import { formatDryRunPreview } from "../lib/cli/preview.js";
 import { validateProjectName } from "../lib/cli/scaffold.js";
 import { resolveTemplateSelection } from "../lib/cli/workflow.js";
@@ -45,6 +46,12 @@ test("parseArgs parses dry-run and explain flags", () => {
   assert.equal(args.dryRun, true);
   assert.equal(args.explain, true);
   assert.deepEqual(args.comboTokens, ["react", "vite"]);
+});
+
+test("parseArgs parses the doctor flag", () => {
+  const args = parseArgs(["--doctor"]);
+
+  assert.equal(args.doctor, true);
 });
 
 test("parseArgs accepts bun as a package manager value", () => {
@@ -88,6 +95,15 @@ test("formatDryRunPreview describes the selected template without scaffolding", 
   assert.match(preview, /Template: single\/react-vite-ts-tailwind/);
   assert.match(preview, /react -> React/);
   assert.match(preview, /Files to create:/);
+});
+
+test("doctor report passes for the committed template catalog", () => {
+  const report = createDoctorReport();
+  const formatted = formatDoctorReport(report);
+
+  assert.equal(report.ok, true, formatted);
+  assert.match(formatted, /starter-structure-cli doctor/);
+  assert.match(formatted, /Doctor passed/);
 });
 
 test("validateProjectName accepts npm-safe names and rejects invalid ones", () => {

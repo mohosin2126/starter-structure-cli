@@ -8,6 +8,7 @@ import pc from "picocolors";
 
 import { parseArgs, printHelp } from "../lib/cli/args.js";
 import { discoverTemplates, listTemplates } from "../lib/cli/catalog.js";
+import { createDoctorReport, formatDoctorReport } from "../lib/cli/doctor.js";
 import {
   getTargetDirectoryError,
   getTemplateDirectoryError,
@@ -45,6 +46,15 @@ async function main() {
 
   if (args.help) {
     printHelp();
+    return;
+  }
+
+  if (args.doctor) {
+    const report = createDoctorReport();
+    console.log(formatDoctorReport(report));
+    if (!report.ok) {
+      process.exitCode = 1;
+    }
     return;
   }
 

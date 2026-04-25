@@ -40,6 +40,12 @@ List templates:
 npx starter-structure-cli --list
 ```
 
+Check the package and template health:
+
+```bash
+npx starter-structure-cli --doctor
+```
+
 Preview a selected template without creating files:
 
 ```bash
@@ -74,6 +80,7 @@ Use `--dry-run` to see the selected template, target directory status, match exp
 ```text
 -h, --help
 --list
+--doctor
 --dry-run
 --explain
 -o, --output <dir>

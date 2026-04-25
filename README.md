@@ -73,6 +73,12 @@ List templates:
 npx starter-structure-cli --list
 ```
 
+Check project health:
+
+```bash
+npx starter-structure-cli --doctor
+```
+
 Preview a match without writing files:
 
 ```bash
