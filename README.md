@@ -87,6 +87,13 @@ npx starter-structure-cli --doctor --json
 npx starter-structure-cli my-app react vite ts --dry-run --json
 ```
 
+Inspect one template:
+
+```bash
+npx starter-structure-cli --template-info single/react-vite-ts-tailwind
+npx starter-structure-cli --template-info single/react-vite-ts-tailwind --json
+```
+
 Preview a match without writing files:
 
 ```bash

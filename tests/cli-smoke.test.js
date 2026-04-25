@@ -12,6 +12,7 @@ import { discoverTemplates, serializeTemplateList } from "../lib/cli/catalog.js"
 import { createDoctorReport, formatDoctorReport } from "../lib/cli/doctor.js";
 import { createDryRunPreview, formatDryRunPreview } from "../lib/cli/preview.js";
 import { validateProjectName } from "../lib/cli/scaffold.js";
+import { createTemplateInfo, formatTemplateInfo } from "../lib/cli/template-info.js";
 import { resolveTemplateSelection } from "../lib/cli/workflow.js";
 import { templatesRoot } from "../lib/template-builder.js";
 
@@ -94,6 +95,12 @@ test("parseArgs parses a custom output directory", () => {
   assert.equal(args.outputDir, "./apps/my-app");
 });
 
+test("parseArgs parses template-info references", () => {
+  const args = parseArgs(["--template-info", "single/react-vite-ts-tailwind"]);
+
+  assert.equal(args.templateInfoRef, "single/react-vite-ts-tailwind");
+});
+
 test("parseArgs rejects unknown flags", () => {
   assert.throws(
     () => parseArgs(["my-app", "--pakage-manager", "pnpm"]),
@@ -168,6 +175,25 @@ test("discovered templates include useful descriptions", () => {
   assert.match(template.description, /Vite/);
   assert.match(template.description, /TypeScript/);
   assert.match(template.description, /Tailwind CSS/);
+});
+
+test("template info includes metadata and file details", () => {
+  const templates = discoverTemplates(templatesRoot);
+  const template = templates.find(
+    (item) => item.id === "single/react-vite-ts-tailwind"
+  );
+
+  assert.ok(template, "expected react vite ts template to be available");
+
+  const info = createTemplateInfo(template);
+  const formatted = formatTemplateInfo(template);
+
+  assert.equal(info.template.id, "single/react-vite-ts-tailwind");
+  assert.equal(info.suggestedPackageManager, "npm");
+  assert.ok(info.files.includes("package.json"));
+  assert.match(formatted, /Suggested package manager: npm/);
+  assert.match(formatted, /Files \(/);
+  assert.doesNotThrow(() => JSON.stringify(info));
 });
 
 test("doctor report passes for the committed template catalog", () => {

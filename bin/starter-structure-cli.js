@@ -31,6 +31,8 @@ import {
   resolveProjectName,
   resolveTemplateSelection
 } from "../lib/cli/workflow.js";
+import { createTemplateInfo, formatTemplateInfo } from "../lib/cli/template-info.js";
+import { resolveTemplateByReference } from "../lib/cli/matching.js";
 import { ensureTemplatesReady, templatesRoot } from "../lib/template-builder.js";
 
 function resolveStep(result) {
@@ -70,6 +72,28 @@ async function main() {
     throw new Error(
       `No templates found in ${templatesRoot}. Build them with "npm run build:templates".`
     );
+  }
+
+  if (args.templateInfoRef) {
+    const template = resolveTemplateByReference(templates, args.templateInfoRef);
+
+    if (!template) {
+      const message = `Template not found: ${args.templateInfoRef}`;
+      if (args.json) {
+        console.log(JSON.stringify({ ok: false, error: message }, null, 2));
+        process.exitCode = 1;
+        return;
+      }
+
+      throw new Error(message);
+    }
+
+    console.log(
+      args.json
+        ? JSON.stringify(createTemplateInfo(template), null, 2)
+        : formatTemplateInfo(template)
+    );
+    return;
   }
 
   if (args.list) {
